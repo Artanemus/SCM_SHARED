@@ -24,18 +24,18 @@ const
     (Depreciated? CHECK)
     SCMDefines may be referenced in SCM_LEADERBOARD
   }
-  // LB_INITIALISE = WM_USER + 12;
-  // LB_EMPTYENTRANTS = WM_USER + 13;
-  // LB_UPDATEENTRANTS = WM_USER + 14;
-  // LB_EMPTYEVENTS = WM_USER + 15;
-  // LB_UPDATEMEMBERSAGE = WM_USER + 16;
-  // LB_UPDATESESSION = WM_USER + 17;
-  // LB_UPDATEMEMBERSSCORE = WM_USER + 18;
+   SCM_INITIALISE = WM_USER + 12;
+   SCM_EMPTYENTRANTS = WM_USER + 13;
+   SCM_UPDATEENTRANTS = WM_USER + 14;
+   SCM_EMPTYEVENTS = WM_USER + 15;
+   SCM_UPDATEMEMBERSAGE = WM_USER + 16;
+   SCM_UPDATESESSION = WM_USER + 17;
+   SCM_UPDATEMEMBERSSCORE = WM_USER + 18;
   // LB_PROGRESSBARBEGIN = WM_USER + 19;
   // LB_PROGRESSBARUPDATE = WM_USER + 20;
   // LB_PROGRESSBAREND = WM_USER + 21;
-  // LB_UPDATEENTRANTSSCORE = WM_USER + 22;
-  // LB_OPTIONS = WM_USER + 23;
+   SCM_UPDATEENTRANTSSCORE = WM_USER + 22;
+   SCM_OPTIONS = WM_USER + 23;
 
   // Messages used in Manage Members form.
    SCM_AFTERSCROLL =  WM_USER + 26;
@@ -46,12 +46,11 @@ const
 
    SCM_REQUERY = WM_USER + 29;
 
-  // type
-  // scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
-  // scmSendToMode = (stmSendToPrinter, stmSendToFile);
-  // scmRptType = (rtMarshall, rtTimeKeeper);
+   type
+   scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
+   scmSendToMode = (stmSendToPrinter, stmSendToFile);
+   scmRptType = (rtMarshall, rtTimeKeeper);
 
-  {
     seedMethod = (
     // *********************************
     // U S E R   S E L E C T I O N . . .
@@ -76,14 +75,13 @@ const
     smDualSeeding,
     // times used originate from events held in current session
     smMastersChampionSeeding);
-  }
 
-  // scmEventFinalsType = (ftFinals, ftSemi, ftQuarter);
+   scmEventFinalsType = (ftFinals, ftSemi, ftQuarter);
 
-  // var
-  // scmSendToFileTypes: scmSendToFileType;
-  // scmSendToModes: scmSendToMode;
-  // scmRptTypes: scmRptType;
+   var
+   scmSendToFileTypes: scmSendToFileType;
+   scmSendToModes: scmSendToMode;
+   scmRptTypes: scmRptType;
 
   implementation
 
