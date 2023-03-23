@@ -4,8 +4,11 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, dmSCM;
+  System.Classes, Vcl.Graphics, FireDAC.Stan.Def,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  FireDAC.Comp.Client, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait, Data.DB;
 
 type
   TBasicLogin = class(TForm)
@@ -27,8 +30,13 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    fADatabaseName: String;
+    fAConnection: TFDConnection;
   public
     { Public declarations }
+  published
+    property ADataBaseName: string read fADatabaseName write fADatabaseName;
+    property AConnection: TFDConnection read fAConnection write fAConnection;
   end;
 
 var
@@ -58,23 +66,29 @@ begin
   lblMsg.Update();
   Application.ProcessMessages();
 
-  sc := TSimpleConnect.CreateWithConnection(Self, SCM.scmConnection);
-  sc.SimpleMakeTemporyConnection(edtServer.Text, edtUser.Text, edtPassword.Text,
-    chkOsAuthent.Checked);
-  lblMsg.Visible := false;
-  if (SCM.scmConnection.Connected) then
+  if Assigned(fAConnection) then
   begin
-    // setting modal result will Close() the form;
-    ModalResult := mrOk;
-  end
-  else
-  begin
-    // show error message - let user try again or abort
-    lblLoginErrMsg.Visible := true;
-    btnAbort.Visible := true;
-    btnConnect.Visible := true;
+    sc := TSimpleConnect.CreateWithConnection(Self, fAConnection);
+    // default : SwimClubMeet : change to connect to other databases.
+    sc.DatabaseName := fADatabaseName;
+    sc.SimpleMakeTemporyConnection(edtServer.Text, edtUser.Text,
+      edtPassword.Text, chkOsAuthent.Checked);
+    lblMsg.Visible := false;
+
+    if (fAConnection.Connected) then
+    begin
+      // setting modal result will Close() the form;
+      ModalResult := mrOk;
+    end
+    else
+    begin
+      // show error message - let user try again or abort
+      lblLoginErrMsg.Visible := true;
+      btnAbort.Visible := true;
+      btnConnect.Visible := true;
+    end;
+    sc.Free;
   end;
-  sc.Free;
 
 end;
 
@@ -85,34 +99,37 @@ var
 begin
   lblLoginErrMsg.Visible := false;
   lblMsg.Visible := false;
+  fADatabaseName := 'SwimClubMeet';
 
-  if Assigned(SCM) then
-  begin
-      // Read last successful connection params and load into controls
-      ASection := 'MSSQL_SwimClubMeet';
-      AName := 'Server';
-      edtServer.Text := LoadSharedIniFileSetting(ASection, AName);
-      AName := 'User';
-      edtUser.Text := LoadSharedIniFileSetting(ASection, AName);
-      AName := 'Password';
-      edtPassword.Text := LoadSharedIniFileSetting(ASection, AName);
-      AName := 'OsAuthent';
-      AValue := LoadSharedIniFileSetting(ASection, AName);
-      if ((UpperCase(AValue) = 'YES') or (UpperCase(AValue) = 'TRUE')) then
-        chkOsAuthent.Checked := true
-      else
-        chkOsAuthent.Checked := false;
-  end
+  // Read last successful connection params and load into controls
+  ASection := 'MSSQL_Connection';
+  AName := 'Server';
+  edtServer.Text := LoadSharedIniFileSetting(ASection, AName);
+  AName := 'User';
+  edtUser.Text := LoadSharedIniFileSetting(ASection, AName);
+  AName := 'Password';
+  edtPassword.Text := LoadSharedIniFileSetting(ASection, AName);
+  AName := 'OsAuthent';
+  AValue := LoadSharedIniFileSetting(ASection, AName);
+  if ((UpperCase(AValue) = 'YES') or (UpperCase(AValue) = 'TRUE')) then
+    chkOsAuthent.Checked := true
   else
-  begin
-    // unexpected error
-    ModalResult := mrAbort;
-  end;
+    chkOsAuthent.Checked := false;
 
 end;
 
 procedure TBasicLogin.FormShow(Sender: TObject);
 begin
+  Caption := 'Login to the ' + fADatabaseName + ' Server ...';
+
+  if not Assigned(fAConnection) then
+  begin
+    lblLoginErrMsg.Visible := false;
+    lblLoginErrMsg.Caption := 'SCM SYSTEM ERROR : Connection not assigned!';
+    btnAbort.Visible := true;
+    btnConnect.Visible := false;
+  end;
+
   btnConnect.SetFocus;
 end;
 

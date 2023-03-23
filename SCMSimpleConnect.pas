@@ -3,13 +3,15 @@ unit SCMSimpleConnect;
 interface
 
 uses
-  Classes, FireDAC.Stan.Def, FireDAC.Comp.Client;
+  Classes, FireDAC.Stan.Def, FireDAC.Comp.Client, vcl.Forms;
 
 type
   TSimpleConnect = class(TComponent)
   private
     { private declarations }
-    FscmConnection: TFDConnection;
+    FAConnection: TFDConnection;
+    fDatabaseName: String;
+    fAppShortName: String;
   protected
     { protected declarations }
   public
@@ -17,30 +19,35 @@ type
     procedure SimpleMakeTemporyConnection(Server, User, Password: string;
       OsAuthent: boolean);
     constructor Create(AOwner: TComponent); override;
-    constructor CreateWithConnection(AOwner: TComponent; AConnection: TFDConnection);
+    constructor CreateWithConnection(AOwner: TComponent;
+      AConnection: TFDConnection);
 
   published
     { published declarations }
-    property scmConnection: TFDConnection read FscmConnection
-      write FscmConnection;
+    property scmConnection: TFDConnection read FAConnection write FAConnection;
+    property DatabaseName: string read fDatabaseName write fDatabaseName;
+
   end;
 
   { TSimpleConnect }
 implementation
 
 uses
-  SysUtils, SCMUtility, System.IniFiles;
+  SysUtils, SCMUtility, System.IniFiles, System.IOUtils;
 
 constructor TSimpleConnect.Create(AOwner: TComponent);
 begin
   inherited;
+  // default
+  fDatabaseName := 'SwimClubMeet';
+  fAppShortName := TPath.GetFileNameWithoutExtension(Application.ExeName);
 end;
 
 constructor TSimpleConnect.CreateWithConnection(AOwner: TComponent;
   AConnection: TFDConnection);
 begin
   Create(AOwner);
-  FscmConnection := AConnection;
+  FAConnection := AConnection;
 end;
 
 procedure TSimpleConnect.SimpleMakeTemporyConnection(Server, User,
@@ -48,31 +55,40 @@ procedure TSimpleConnect.SimpleMakeTemporyConnection(Server, User,
 var
   AValue, ASection, AName: string;
 begin
-  if (FscmConnection.Connected) then
-  begin
-    FscmConnection.Close();
-  end;
 
-  FscmConnection.Params.Add('Server=' + Server);
-  FscmConnection.Params.Add('DriverID=MSSQL');
-  FscmConnection.Params.Add('Database=SwimClubMeet');
-  FscmConnection.Params.Add('User_name=' + User);
-  FscmConnection.Params.Add('Password=' + Password);
+  if not Assigned(FAConnection) then
+    exit;
+
+  if (FAConnection.Connected) then
+  begin
+    FAConnection.Close();
+  end;
+  FAConnection.Params.Clear;
+
+  FAConnection.Params.Add('Server=' + Server);
+  FAConnection.Params.Add('DriverID=MSSQL');
+  FAConnection.Params.Add('Database=' + fDatabaseName);
+  FAConnection.Params.Add('User_name=' + User);
+  FAConnection.Params.Add('Password=' + Password);
   if (OsAuthent) then
     AValue := 'Yes'
   else
     AValue := 'No';
-  FscmConnection.Params.Add('OSAuthent=' + AValue);
-  FscmConnection.Params.Add('Mars=yes');
-  FscmConnection.Params.Add('MetaDefSchema=dbo');
-  FscmConnection.Params.Add('ExtendedMetadata=False');
-  FscmConnection.Params.Add('ApplicationName=scmTimeKeeper');
-  FscmConnection.Connected := True;
+  FAConnection.Params.Add('OSAuthent=' + AValue);
+  FAConnection.Params.Add('Mars=yes');
+  FAConnection.Params.Add('MetaDefSchema=dbo');
+  FAConnection.Params.Add('ExtendedMetadata=False');
+  FAConnection.Params.Add('ApplicationName=' + fAppShortName);
+  try
+    FAConnection.Open;
+  except
+    // Display the server error?
+  end;
 
-  // ON SUCCESS - Save connection details.
-  if (FscmConnection.Connected) then
+    // ON SUCCESS - Save connection details.
+  if (FAConnection.Connected) then
   begin
-    ASection := 'MSSQL_SwimClubMeet';
+    ASection := 'MSSQL_Connection';
     AName := 'Server';
     SaveSharedIniFileSetting(ASection, AName, Server);
     AName := 'User';
@@ -84,6 +100,5 @@ begin
   end
 
 end;
-
 
 end.
