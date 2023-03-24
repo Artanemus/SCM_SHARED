@@ -4514,10 +4514,10 @@ object About: TAbout
     ParentFont = False
   end
   object Label19: TLabel
-    Left = 33
+    Left = 49
     Top = 390
-    Width = 85
-    Height = 35
+    Width = 69
+    Height = 38
     Alignment = taRightJustify
     Caption = 'Database Version'
     WordWrap = True
@@ -5211,7 +5211,7 @@ object About: TAbout
   end
   object dsSCMSystem: TDataSource
     DataSet = qrySCMSystem
-    Left = 32
-    Top = 360
+    Left = 136
+    Top = 304
   end
 end

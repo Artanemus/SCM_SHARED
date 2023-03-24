@@ -9,8 +9,8 @@ type
   TSimpleConnect = class(TComponent)
   private
     { private declarations }
-    FAConnection: TFDConnection;
-    fDatabaseName: String;
+    fDBConnection: TFDConnection;
+    fDBName: String;
     fAppShortName: String;
   protected
     { protected declarations }
@@ -24,8 +24,8 @@ type
 
   published
     { published declarations }
-    property scmConnection: TFDConnection read FAConnection write FAConnection;
-    property DatabaseName: string read fDatabaseName write fDatabaseName;
+    property DBConnection: TFDConnection read fDBConnection write fDBConnection;
+    property DBName: string read fDBName write fDBName;
 
   end;
 
@@ -39,7 +39,7 @@ constructor TSimpleConnect.Create(AOwner: TComponent);
 begin
   inherited;
   // default
-  fDatabaseName := 'SwimClubMeet';
+  fDBName := 'SwimClubMeet';
   fAppShortName := TPath.GetFileNameWithoutExtension(Application.ExeName);
 end;
 
@@ -47,7 +47,7 @@ constructor TSimpleConnect.CreateWithConnection(AOwner: TComponent;
   AConnection: TFDConnection);
 begin
   Create(AOwner);
-  FAConnection := AConnection;
+  fDBConnection := AConnection;
 end;
 
 procedure TSimpleConnect.SimpleMakeTemporyConnection(Server, User,
@@ -56,37 +56,39 @@ var
   AValue, ASection, AName: string;
 begin
 
-  if not Assigned(FAConnection) then
+  if not Assigned(fDBConnection) then
     exit;
 
-  if (FAConnection.Connected) then
+  if (fDBConnection.Connected) then
   begin
-    FAConnection.Close();
+    fDBConnection.Close();
   end;
-  FAConnection.Params.Clear;
 
-  FAConnection.Params.Add('Server=' + Server);
-  FAConnection.Params.Add('DriverID=MSSQL');
-  FAConnection.Params.Add('Database=' + fDatabaseName);
-  FAConnection.Params.Add('User_name=' + User);
-  FAConnection.Params.Add('Password=' + Password);
+  // Required for multi connection attempts to work
+  fDBConnection.Params.Clear;
+
+  fDBConnection.Params.Add('Server=' + Server);
+  fDBConnection.Params.Add('DriverID=MSSQL');
+  fDBConnection.Params.Add('Database=' + fDBName);
+  fDBConnection.Params.Add('User_name=' + User);
+  fDBConnection.Params.Add('Password=' + Password);
   if (OsAuthent) then
     AValue := 'Yes'
   else
     AValue := 'No';
-  FAConnection.Params.Add('OSAuthent=' + AValue);
-  FAConnection.Params.Add('Mars=yes');
-  FAConnection.Params.Add('MetaDefSchema=dbo');
-  FAConnection.Params.Add('ExtendedMetadata=False');
-  FAConnection.Params.Add('ApplicationName=' + fAppShortName);
+  fDBConnection.Params.Add('OSAuthent=' + AValue);
+  fDBConnection.Params.Add('Mars=yes');
+  fDBConnection.Params.Add('MetaDefSchema=dbo');
+  fDBConnection.Params.Add('ExtendedMetadata=False');
+  fDBConnection.Params.Add('ApplicationName=' + fAppShortName);
   try
-    FAConnection.Open;
+    fDBConnection.Open;
   except
     // Display the server error?
   end;
 
     // ON SUCCESS - Save connection details.
-  if (FAConnection.Connected) then
+  if (fDBConnection.Connected) then
   begin
     ASection := 'MSSQL_Connection';
     AName := 'Server';

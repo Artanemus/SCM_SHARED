@@ -30,13 +30,13 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-    fADatabaseName: String;
-    fAConnection: TFDConnection;
+    fDBName: String;
+    fDBConnection: TFDConnection;
   public
     { Public declarations }
   published
-    property ADataBaseName: string read fADatabaseName write fADatabaseName;
-    property AConnection: TFDConnection read fAConnection write fAConnection;
+    property DBName: string read fDBName write fDBName;
+    property DBConnection: TFDConnection read fDBConnection write fDBConnection;
   end;
 
 var
@@ -66,16 +66,16 @@ begin
   lblMsg.Update();
   Application.ProcessMessages();
 
-  if Assigned(fAConnection) then
+  if Assigned(fDBConnection) then
   begin
-    sc := TSimpleConnect.CreateWithConnection(Self, fAConnection);
-    // default : SwimClubMeet : change to connect to other databases.
-    sc.DatabaseName := fADatabaseName;
+    sc := TSimpleConnect.CreateWithConnection(Self, fDBConnection);
+    // DEFAULT : SwimClubMeet
+    sc.DBName := fDBName;
     sc.SimpleMakeTemporyConnection(edtServer.Text, edtUser.Text,
       edtPassword.Text, chkOsAuthent.Checked);
     lblMsg.Visible := false;
 
-    if (fAConnection.Connected) then
+    if (fDBConnection.Connected) then
     begin
       // setting modal result will Close() the form;
       ModalResult := mrOk;
@@ -99,7 +99,7 @@ var
 begin
   lblLoginErrMsg.Visible := false;
   lblMsg.Visible := false;
-  fADatabaseName := 'SwimClubMeet';
+  fDBName := 'SwimClubMeet'; // DEFAULT
 
   // Read last successful connection params and load into controls
   ASection := 'MSSQL_Connection';
@@ -120,9 +120,9 @@ end;
 
 procedure TBasicLogin.FormShow(Sender: TObject);
 begin
-  Caption := 'Login to the ' + fADatabaseName + ' Server ...';
+  Caption := 'Login to the ' + fDBName + ' Server ...';
 
-  if not Assigned(fAConnection) then
+  if not Assigned(fDBConnection) then
   begin
     lblLoginErrMsg.Visible := false;
     lblLoginErrMsg.Caption := 'SCM SYSTEM ERROR : Connection not assigned!';
