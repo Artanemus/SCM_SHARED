@@ -15,7 +15,11 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, System.Win.Registry, shlobj;
+  System.Classes,
+{$IFDEF MSWINDOWS}
+  System.Win.Registry,
+{$IFEND}
+  shlobj;
 
 function CreateSCMPrefFileName(AFileName: TFileName): boolean;
 function DeleteSCMPrefFileName(AFileName: TFileName): boolean;
@@ -31,12 +35,13 @@ function GetSCMDocumentDir(): string;
 function GetRegAppPath(appName: string): string;
 function GetRegArtanemusAppPath(appName: string): string;
 function ScatterLanes(index, NumOfPoolLanes: integer): integer;
-function CheckInternetA: Boolean;
-function CheckInternetB: Boolean;
+function CheckInternetA: boolean;
+function CheckInternetB: boolean;
 
+{$IFDEF MSWINDOWS}
 function LoadSharedIniFileSetting(ASection, AName: string): string;
 procedure SaveSharedIniFileSetting(ASection, AName, AValue: string);
-
+{$IFEND}
 
 const
   PrefFileName = 'SCMPref.ini';
@@ -44,16 +49,15 @@ const
   SCMSubFolder = 'Artanemus\SCM\';
   SCMSectionName = 'SCM';
 
-
 implementation
 
 uses
-  {$IFDEF MSWINDOWS}
-  system.IniFiles,
-  {$IFEND}
+{$IFDEF MSWINDOWS}
+  System.IniFiles,
+{$IFEND}
   System.Math,
   WinInet, // for interenet
-  IdTCPClient;   // for checkinternet
+  IdTCPClient; // for checkinternet
 
 // Winapi.ShLwApi;
 
@@ -62,20 +66,20 @@ begin
   result := GetSCMAppDataDir + PrefFileName;
 end;
 
-
 // WINDOWS API FUNCTION
-function CheckInternetA: Boolean;
+function CheckInternetA: boolean;
 var
   origin: Cardinal;
 begin
-Result := False;
-  if InternetGetConnectedState(@origin,0) then
-    Result := True;
+  result := False;
+  if InternetGetConnectedState(@origin, 0) then
+    result := True;
 end;
 
 // POLL GOOGLE
-function CheckInternetB: Boolean;
-var TCPClient:TIdTCPClient;
+function CheckInternetB: boolean;
+var
+  TCPClient: TIdTCPClient;
 begin
   TCPClient := TIdTCPClient.Create(NIL);
   try
@@ -86,9 +90,9 @@ begin
       TCPClient.Host := 'google.com';
       TCPClient.Connect;
       TCPClient.Disconnect;
-      Result := true;
+      result := True;
     except
-      Result := false;
+      result := False;
     end;
   finally
     TCPClient.Free;
@@ -99,20 +103,20 @@ function CreateSCMPrefFileName(AFileName: TFileName): boolean;
 var
   filehandle: NativeUInt;
 begin
-  result := false;
+  result := False;
   // create the Help Preference file in 'APPDATA'
   filehandle := FileCreate(AFileName);
   // if NOT 'file already exists'
   if not(filehandle = INVALID_HANDLE_VALUE) then
   begin
     FileClose(filehandle); // close.
-    result := true;
+    result := True;
   end;
 end;
 
 function DeleteSCMPrefFileName(AFileName: TFileName): boolean;
 begin
-  result := false;
+  result := False;
   // delete the Help Preference file in 'APPDATA'
   if (FileExists(AFileName)) then
     result := DeleteFile(AFileName);
@@ -175,7 +179,7 @@ var
   szPath: array [0 .. Max_Path] of Char;
   SCMConnectionDefsFileName: String;
 begin
-  result := false;
+  result := False;
   SCMConnectionDefsFileName := 'SCMConnectionDef.ini';
   if (SUCCEEDED(SHGetFolderPath(null, CSIDL_COMMON_APPDATA, 0, 0, szPath))) then
   begin
@@ -183,7 +187,7 @@ begin
     str := IncludeTrailingPathDelimiter(str) + SCMSubFolder +
       SCMConnectionDefsFileName;;
     if FileExists(str) then
-      result := true;
+      result := True;
   end;
 end;
 // ---------------------------------------------------------------------------
@@ -252,7 +256,7 @@ begin
       reg.RootKey := HKEY_LOCAL_MACHINE;
       if reg.KeyExists(KeyName) then
       begin
-        reg.OpenKey(KeyName, false);
+        reg.OpenKey(KeyName, False);
         result := reg.ReadString('Path');
       end;
     end;
@@ -274,7 +278,7 @@ begin
   try
     begin
       reg.RootKey := HKEY_CURRENT_USER;
-      reg.OpenKey(KeyName, false);
+      reg.OpenKey(KeyName, False);
       result := reg.ReadString('Path');
     end;
   finally
@@ -310,9 +314,9 @@ begin
     // start the iterate at index 1
     // reference previous value in list with base 0
     if (((i + 1) MOD 2) = 0) then
-      IsEven := true
+      IsEven := True
     else
-      IsEven := false;
+      IsEven := False;
     if IsEven then
       Lanes[i] := (i) + (Lanes[(i - 1)])
     else
@@ -338,7 +342,7 @@ var
 begin
   ini := TIniFile.Create(GetSCM_SharedIniFile);
   try
-    result := ini.ReadString(ASection, Aname, '');
+    result := ini.ReadString(ASection, AName, '');
   finally
     ini.Free;
   end;
@@ -356,7 +360,6 @@ begin
   end;
 
 end;
-
 
 {$ENDIF}
 

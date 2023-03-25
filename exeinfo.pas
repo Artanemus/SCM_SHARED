@@ -1,12 +1,22 @@
-
 unit ExeInfo;
 
 interface
 
-
 uses
-  Windows, Messages, SysUtils, Classes, Forms, Graphics, Controls, Dialogs,
-  TypInfo;
+
+(*
+{$IFDEF FRAMEWORK_VCL}
+  vcl.Forms, vcl.Graphics, vcl.Controls, vcl.Dialogs,
+{$IFEND}
+{$IFDEF FRAMEWORK_FMX}
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Controls,
+  FMX.Dialogs,
+{$IFEND}
+*)
+
+  TypInfo, Windows, Messages, SysUtils, Classes;
 
 const
   MAJ_VER = 1; // Major version nr.
@@ -15,29 +25,30 @@ const
   BLD_VER = 0; // Build nr.
 
 type
+
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   TExeInfo = class(TComponent)
   private
     { Private declarations }
-    FCompanyName      : String;
-    FFileDescription  : String;
-    FFileVersion      : String;
-    FInternalName     : String;
-    FLegalCopyright   : String;
-    FLegalTradeMark   : String;
-    FOriginalFileName : String;
-    FProductName      : String;
-    FProductVersion   : String;
-    FComments         : String;
-    FComputerName     : String;
-    FOsName           : String;
-    FWindowsDir       : String;
-    FSystemDir        : String;
-    FTempDir          : String;
-    FFileFlags        : integer;
-    FFileOS           : integer;
-    FFileType         : integer;
-    FFileCreation     : TDateTime;
+    FCompanyName: String;
+    FFileDescription: String;
+    FFileVersion: String;
+    FInternalName: String;
+    FLegalCopyright: String;
+    FLegalTradeMark: String;
+    FOriginalFileName: String;
+    FProductName: String;
+    FProductVersion: String;
+    FComments: String;
+    FComputerName: String;
+    FOsName: String;
+    FWindowsDir: String;
+    FSystemDir: String;
+    FTempDir: String;
+    FFileFlags: integer;
+    FFileOS: integer;
+    FFileType: integer;
+    FFileCreation: TDateTime;
     FMyDocumentsDir: string;
     function GetVersion: string;
     procedure SetVersion(const Value: string);
@@ -45,23 +56,23 @@ type
     function GetMyDocumentsDir: string;
   protected
     { Protected declarations }
-    function GetVersionNr: Integer; virtual;
+    function GetVersionNr: integer; virtual;
     procedure GetVersionInfo; virtual;
-    function GetComputerName : String; virtual;
-    //procedure SetComputerName(AName : String); virtual;
-    function GetWinDir : String;
-    function GetSysDir : String;
-    function GetTempDir : String;
+    function GetComputerName: String; virtual;
+    // procedure SetComputerName(AName : String); virtual;
+    function GetWinDir: String;
+    function GetSysDir: String;
+    function GetTempDir: String;
     function GetVersionPart(idx: integer): integer;
   public
     { Public declarations }
-    procedure GetVersionInfoOfApp(const AAppName:String); 
+    procedure GetVersionInfoOfApp(const AAppName: String);
     constructor Create(AOwner: TComponent); override;
-    property FileFlags        : integer read FFileFlags;
-    property FileOS           : integer read FFileOS;
-    property FileType         : integer read FFileType;
-    property FileCreation     : TDateTime read FFileCreation;
-    function GetOperatingSystem : string; virtual;
+    property FileFlags: integer read FFileFlags;
+    property FileOS: integer read FFileOS;
+    property FileType: integer read FFileType;
+    property FileCreation: TDateTime read FFileCreation;
+    function GetOperatingSystem: string; virtual;
     function MajorVersion: integer;
     function MinorVersion: integer;
     function ReleaseNumber: integer;
@@ -69,31 +80,39 @@ type
     property FileVersionInt: integer read GetFileVersionInt;
   published
     { Published declarations }
-    property CompanyName      : string read FCompanyName write FCompanyName stored false;
-    property FileDescription  : string read FFileDescription write FFileDescription stored false;
-    property FileVersion      : string read FFileVersion write FFileVersion stored false;
-    property InternalName     : string read FInternalName write FInternalName stored false;
-    property LegalCopyright   : string read FLegalCopyright write FLegalCopyright stored false;
-    property LegalTradeMark   : string read FLegalTradeMark write FLegalTradeMark stored false;
-    property OriginalFileName : string read FOriginalFileName write FOriginalFileName stored false;
-    property ProductName      : string read FProductName write FProductName stored false;
-    property ProductVersion   : string read FProductVersion write FProductVersion stored false;
-    property Comments         : string read FComments write FComments stored false;
-    property ComputerName     : string read GetComputerName stored false;
-    property OSName           : string read GetOperatingSystem write FOSName stored false;
-    property WindowsDir       : string read GetWinDir write FWindowsDir stored false;
-    property SystemDir        : string read GetSysDir write FSystemDir stored false;
-    property TempDir          : string read GetTempDir write FTempDir stored false;
-    property MyDocumentsDir   : string read GetMyDocumentsDir write FMyDocumentsDir stored false;
-    property Version          : string read GetVersion write SetVersion;
+    property CompanyName: string read FCompanyName write FCompanyName
+      stored false;
+    property FileDescription: string read FFileDescription
+      write FFileDescription stored false;
+    property FileVersion: string read FFileVersion write FFileVersion
+      stored false;
+    property InternalName: string read FInternalName write FInternalName
+      stored false;
+    property LegalCopyright: string read FLegalCopyright write FLegalCopyright
+      stored false;
+    property LegalTradeMark: string read FLegalTradeMark write FLegalTradeMark
+      stored false;
+    property OriginalFileName: string read FOriginalFileName
+      write FOriginalFileName stored false;
+    property ProductName: string read FProductName write FProductName
+      stored false;
+    property ProductVersion: string read FProductVersion write FProductVersion
+      stored false;
+    property Comments: string read FComments write FComments stored false;
+    property ComputerName: string read GetComputerName stored false;
+    property OSName: string read GetOperatingSystem write FOsName stored false;
+    property WindowsDir: string read GetWinDir write FWindowsDir stored false;
+    property SystemDir: string read GetSysDir write FSystemDir stored false;
+    property TempDir: string read GetTempDir write FTempDir stored false;
+    property MyDocumentsDir: string read GetMyDocumentsDir write FMyDocumentsDir
+      stored false;
+    property Version: string read GetVersion write SetVersion;
   end;
-
 
 implementation
 
 uses
   StrUtils, ShlObj;
-
 
 function TExeInfo.BuildNumber: integer;
 begin
@@ -103,140 +122,162 @@ end;
 constructor TExeInfo.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FCompanyName      := 'Updated at run-time';
-  FFileDescription  := 'Updated at run-time';
-  FFileVersion      := 'Updated at run-time';
-  FInternalName     := 'Updated at run-time';
-  FLegalCopyright   := 'Updated at run-time';
-  FLegalTradeMark   := 'Updated at run-time';
+  FCompanyName := 'Updated at run-time';
+  FFileDescription := 'Updated at run-time';
+  FFileVersion := 'Updated at run-time';
+  FInternalName := 'Updated at run-time';
+  FLegalCopyright := 'Updated at run-time';
+  FLegalTradeMark := 'Updated at run-time';
   FOriginalFileName := 'Updated at run-time';
-  FProductName      := 'Updated at run-time';
-  FProductVersion   := 'Updated at run-time';
-  FComments         := 'Updated at run-time';
-  FComputerName     := '';
+  FProductName := 'Updated at run-time';
+  FProductVersion := 'Updated at run-time';
+  FComments := 'Updated at run-time';
+  FComputerName := '';
 
-  if not (csDesigning in ComponentState) then
-    Begin
-      GetVersionInfo;
-      FComputerName := GetComputerName;
-    End;
+  if not(csDesigning in ComponentState) then
+  Begin
+    GetVersionInfo;
+    FComputerName := GetComputerName;
+  End;
 end;
 
 procedure TExeInfo.GetVersionInfoOfApp(const AAppName: string);
 type
   PTransBuffer = ^TTransBuffer;
-  TTransBuffer = array[1..4] of smallint;
+  TTransBuffer = array [1 .. 4] of smallint;
 var
-  iAppSize, iLenOfValue : DWord;
-  pcBuf,pcValue         : PChar;
-  VerSize               : DWord;
-  pTrans                : PTransBuffer;
-  TransStr              : string;
-  sAppName              : String;
-  fvip                  : pointer;
-  ft                    : TFileTime;
-  st                    : TSystemTime;
+  iAppSize, iLenOfValue: DWord;
+  pcBuf, pcValue: PChar;
+  VerSize: DWord;
+  pTrans: PTransBuffer;
+  TransStr: string;
+  sAppName: String;
+  fvip: pointer;
+  ft: TFileTime;
+  st: TSystemTime;
 begin
   sAppName := AAppName;
   // get version information values
-  iAppSize:= GetFileVersionInfoSize(PChar(sAppName),// pointer to filename string
-                                    iAppSize);      // pointer to variable to receive zero
-   // if GetFileVersionInfoSize is successful
+  iAppSize := GetFileVersionInfoSize(PChar(sAppName),
+    // pointer to filename string
+    iAppSize); // pointer to variable to receive zero
+  // if GetFileVersionInfoSize is successful
   if (iAppSize > 0) then
+  begin
+    pcBuf := AllocMem(iAppSize);
+
+    GetFileVersionInfo(PChar(sAppName), // pointer to filename string
+      0, // ignored
+      iAppSize, // size of buffer
+      pcBuf); // pointer to buffer to receive file-version info.
+
+    VerQueryValue(pcBuf, '\', fvip, iLenOfValue);
+
+    FFileFlags := TVSFixedFileInfo(fvip^).dwFileFlags and
+      TVSFixedFileInfo(fvip^).dwFileFlagsMask;
+    FFileOS := TVSFixedFileInfo(fvip^).dwFileOS;
+    FFileType := TVSFixedFileInfo(fvip^).dwFileType;
+
+    ft.dwLowDateTime := TVSFixedFileInfo(fvip^).dwFileDateLS;
+    ft.dwHighDateTime := TVSFixedFileInfo(fvip^).dwFileDateMS;
+
+    if (ft.dwLowDateTime <> 0) or (ft.dwHighDateTime <> 0) then
     begin
-      pcBuf := AllocMem(iAppSize);
-
-      GetFileVersionInfo(PChar(sAppName),              // pointer to filename string
-                         0,                            // ignored
-                         iAppSize,                     // size of buffer
-                         pcBuf);                       // pointer to buffer to receive file-version info.
-
-
-      VerQueryValue(pcBuf, '\', fvip, iLenOfValue);
-
-      FFileFlags := TVSFixedFileInfo(fvip^).dwFileFlags and TVSFixedFileInfo (fvip^).dwFileFlagsMask;
-      FFileOS := TVSFixedFileInfo(fvip^).dwFileOS;
-      FFileType := TVSFixedFileInfo(fvip^).dwFileType;
-
-      ft.dwLowDateTime := TVSFixedFileInfo(fvip^).dwFileDateLS;
-      ft.dwHighDateTime := TVSFixedFileInfo(fvip^).dwFileDateMS;
-
-      if (ft.dwLowDateTime <> 0) or (ft.dwHighDateTime <> 0) then
-      begin
-        FileTimeToSystemTime(ft,st);
-        FFileCreation := SystemTimeToDateTime(st);
-      end
-      else
-      begin
-        FileAge(Application.ExeName, FFileCreation);
-      end;
-
-      VerQueryValue(pcBuf, PChar('\VarFileInfo\Translation'),
-              pointer(ptrans), verSize);
-      TransStr:= IntToHex(ptrans^[1], 4) + IntToHex(ptrans^[2], 4);
-
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'CompanyName'), Pointer(pcValue),iLenOfValue) then
-            FCompanyName := pcValue
-      Else  FCompanyName := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'FileDescription'), Pointer(pcValue),iLenOfValue) then
-            FFileDescription := pcValue
-      Else  FFileDescription := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'FileVersion'), Pointer(pcValue),iLenOfValue) then
-            FFileVersion := pcValue
-      Else  FFileVersion := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'InternalName'), Pointer(pcValue),iLenOfValue) then
-            FInternalName := pcValue
-      Else  FInternalName := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'LegalCopyright'), Pointer(pcValue),iLenOfValue) then
-            FLegalCopyright := pcValue
-      Else  FLegalCopyright := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'LegalTradeMarks'), Pointer(pcValue),iLenOfValue) then
-            FLegalTradeMark := pcValue
-      Else  FLegalTradeMark := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'OriginalFileName'), Pointer(pcValue),iLenOfValue) then
-            FOriginalFileName := pcValue
-      Else  FOriginalFileName := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'ProductName'), Pointer(pcValue),iLenOfValue) then
-            FProductName := pcValue
-      Else  FProductName := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'ProductVersion'), Pointer(pcValue),iLenOfValue) then
-            FProductVersion := pcValue
-      Else  FProductVersion := '';
-      if VerQueryValue(pcBuf,PChar('StringFileInfo\' + TransStr + '\' +
-           'Comments'), Pointer(pcValue),iLenOfValue) then
-            FComments := pcValue
-      Else  FComments := '';
-      FreeMem(pcBuf,iAppSize);
+      FileTimeToSystemTime(ft, st);
+      FFileCreation := SystemTimeToDateTime(st);
+    end
+    else
+    begin
+{$IFDEF FRAMEWORK_FMX}
+      FileAge(ParamStr(0), FFileCreation);
+{$IFEND}
+{$IFDEF FRAMEWORK_VCL}
+      FileAge(Application.ExeName, FFileCreation);
+{$IFEND}
     end;
+
+    VerQueryValue(pcBuf, PChar('\VarFileInfo\Translation'),
+      pointer(pTrans), VerSize);
+    TransStr := IntToHex(pTrans^[1], 4) + IntToHex(pTrans^[2], 4);
+
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'CompanyName'), pointer(pcValue), iLenOfValue) then
+      FCompanyName := pcValue
+    Else
+      FCompanyName := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'FileDescription'), pointer(pcValue), iLenOfValue) then
+      FFileDescription := pcValue
+    Else
+      FFileDescription := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'FileVersion'), pointer(pcValue), iLenOfValue) then
+      FFileVersion := pcValue
+    Else
+      FFileVersion := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'InternalName'), pointer(pcValue), iLenOfValue) then
+      FInternalName := pcValue
+    Else
+      FInternalName := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'LegalCopyright'), pointer(pcValue), iLenOfValue) then
+      FLegalCopyright := pcValue
+    Else
+      FLegalCopyright := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'LegalTradeMarks'), pointer(pcValue), iLenOfValue) then
+      FLegalTradeMark := pcValue
+    Else
+      FLegalTradeMark := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'OriginalFileName'), pointer(pcValue), iLenOfValue) then
+      FOriginalFileName := pcValue
+    Else
+      FOriginalFileName := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'ProductName'), pointer(pcValue), iLenOfValue) then
+      FProductName := pcValue
+    Else
+      FProductName := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'ProductVersion'), pointer(pcValue), iLenOfValue) then
+      FProductVersion := pcValue
+    Else
+      FProductVersion := '';
+    if VerQueryValue(pcBuf, PChar('StringFileInfo\' + TransStr + '\' +
+      'Comments'), pointer(pcValue), iLenOfValue) then
+      FComments := pcValue
+    Else
+      FComments := '';
+    FreeMem(pcBuf, iAppSize);
+  end;
 end;
 
-procedure TExeInfo.GetVersionInfo;            
+procedure TExeInfo.GetVersionInfo;
 begin
+{$IFDEF FRAMEWORK_FMX}
+  GetVersionInfoOfApp(ParamStr(0));
+{$IFEND}
+{$IFDEF FRAMEWORK_VCL}
+  // VCLonly function
   GetVersionInfoOfApp(Application.ExeName);
+{$IFEND}
 end;
 
-function TExeInfo.GetComputerName : String;
+function TExeInfo.GetComputerName: String;
 var
-   pcComputer : PChar;
-   dwCSize    : DWORD;
+  pcComputer: PChar;
+  dwCSize: DWord;
 begin
-   dwCSize := MAX_COMPUTERNAME_LENGTH + 1;
-   GetMem( pcComputer, dwCSize * 2); // allocate memory for the string
-   try
-      if Windows.GetComputerName( pcComputer, dwCSize ) then
-         GetComputerName := StrPas(pcComputer);
-   finally
-      FreeMem( pcComputer ); // now free the memory allocated for the string
-   end;
+  dwCSize := MAX_COMPUTERNAME_LENGTH + 1;
+  GetMem(pcComputer, dwCSize * 2); // allocate memory for the string
+  try
+    if Windows.GetComputerName(pcComputer, dwCSize) then
+      GetComputerName := StrPas(pcComputer);
+  finally
+    FreeMem(pcComputer); // now free the memory allocated for the string
+  end;
 end;
 
 function TExeInfo.GetFileVersionInt: integer;
@@ -250,7 +291,7 @@ begin
   if FileVersion = '' then
     Exit;
 
-  verstr := StringReplace(FileVersion,'.','.',[rfReplaceAll]);
+  verstr := StringReplace(FileVersion, '.', '.', [rfReplaceAll]);
 
   sl := TStringList.Create;
 
@@ -263,7 +304,7 @@ begin
       while (length(sl[i]) < 2) do
         sl[i] := '0' + sl[i];
 
-      sl[i] := copy(sl[i],1,2);
+      sl[i] := copy(sl[i], 1, 2);
 
       verstr := verstr + sl[i];
     end;
@@ -277,34 +318,33 @@ end;
 function TExeInfo.GetMyDocumentsDir: string;
 var
   r: Bool;
-  path: array[0..Max_Path] of Char;
+  path: array [0 .. Max_Path] of Char;
 begin
-  r := ShGetSpecialFolderPath(0, path, CSIDL_Personal, False) ;
+  r := ShGetSpecialFolderPath(0, path, CSIDL_Personal, false);
   if not r then
-    raise Exception.Create('Could not find MyDocuments folder location.') ;
-  Result := Path;
+    raise Exception.Create('Could not find MyDocuments folder location.');
+  Result := path;
 end;
 
-
-function TExeInfo.GetOperatingSystem : string;
+function TExeInfo.GetOperatingSystem: string;
 const
   SM_SERVERR2 = 89;
   VER_NT_WORKSTATION = $0000001;
 type
-  pfnRtlGetVersion = function(var RTL_OSVERSIONINFOEXW): DWORD; stdcall;
+  pfnRtlGetVersion = function(var RTL_OSVERSIONINFOEXW): DWord; stdcall;
 type
   TOSVersionInfoEx = record
-    dwOSVersionInfoSize:DWORD;
-    dwMajorVersion:DWORD;
-    dwMinorVersion:DWORD;
-    dwBuildNumber:DWORD;
-    dwPlatformId:DWORD;
-    szCSDVersion: array[0..127] of Char;
-    wServicePackMajor:WORD;
-    wServicePackMinor:WORD;
-    wSuiteMask:WORD;
-    wProductType:BYTE;
-    wReserved:BYTE;
+    dwOSVersionInfoSize: DWord;
+    dwMajorVersion: DWord;
+    dwMinorVersion: DWord;
+    dwBuildNumber: DWord;
+    dwPlatformId: DWord;
+    szCSDVersion: array [0 .. 127] of Char;
+    wServicePackMajor: WORD;
+    wServicePackMinor: WORD;
+    wSuiteMask: WORD;
+    wProductType: BYTE;
+    wReserved: BYTE;
   End;
 
 var
@@ -313,10 +353,10 @@ var
   ver: RTL_OSVERSIONINFOEXW;
   RtlGetVersion: pfnRtlGetVersion;
 
-
-  procedure GetUnmanistedVersion(var majv,minv: cardinal);
+  procedure GetUnmanistedVersion(var majv, minv: Cardinal);
   begin
-    @RtlGetVersion := GetProcAddress(GetModuleHandle('ntdll.dll'), 'RtlGetVersion');
+    @RtlGetVersion := GetProcAddress(GetModuleHandle('ntdll.dll'),
+      'RtlGetVersion');
     if Assigned(RtlGetVersion) then
     begin
       ZeroMemory(@ver, SizeOf(ver));
@@ -362,9 +402,9 @@ begin
           else if (majorVer = 6) and (minorVer = 1) then
           begin
             if osVerInfo.wProductType = VER_NT_WORKSTATION then
-               Result := 'Windows 7'
+              Result := 'Windows 7'
             else
-               Result := 'Windows Server 2008R2';
+              Result := 'Windows Server 2008R2';
           end
           else if (majorVer = 6) and (minorVer = 2) then
           begin
@@ -412,7 +452,7 @@ begin
           else
             Result := 'Unknown';
         end;
-      VER_PLATFORM_WIN32_WINDOWS:  { Windows 9x/ME }
+      VER_PLATFORM_WIN32_WINDOWS: { Windows 9x/ME }
         begin
           if (majorVer = 4) and (minorVer = 0) then
             Result := 'Windows 95'
@@ -428,28 +468,28 @@ begin
           else
             Result := 'Unknown';
         end;
-      else
-        Result := 'Unknown';
+    else
+      Result := 'Unknown';
     end;
   end
   else
     Result := 'Unknown';
 end;
 
-function TExeInfo.GetWinDir : String;
-//Returns the windows directory
+function TExeInfo.GetWinDir: String;
+// Returns the windows directory
 var
-   pcWindowsDirectory : PChar;
-   dwWDSize           : DWORD;
+  pcWindowsDirectory: PChar;
+  dwWDSize: DWord;
 begin
-   dwWDSize := MAX_PATH + 1;
-   GetMem( pcWindowsDirectory, dwWDSize * 2); // allocate memory for the string
-   try
-      if Windows.GetWindowsDirectory( pcWindowsDirectory, dwWDSize ) <> 0 then
-         Result := StrPas(pcWindowsDirectory) + '\';
-   finally
-      FreeMem( pcWindowsDirectory ); // now free the memory allocated for the string
-   end;
+  dwWDSize := Max_Path + 1;
+  GetMem(pcWindowsDirectory, dwWDSize * 2); // allocate memory for the string
+  try
+    if Windows.GetWindowsDirectory(pcWindowsDirectory, dwWDSize) <> 0 then
+      Result := StrPas(pcWindowsDirectory) + '\';
+  finally
+    FreeMem(pcWindowsDirectory); // now free the memory allocated for the string
+  end;
 end;
 
 function TExeInfo.MajorVersion: integer;
@@ -467,51 +507,50 @@ begin
   Result := GetVersionPart(2);
 end;
 
-function TExeInfo.GetSysDir : String;
-//Returns system directory
+function TExeInfo.GetSysDir: String;
+// Returns system directory
 var
-   pcSystemDirectory : PChar;
-   dwSDSize          : DWORD;
+  pcSystemDirectory: PChar;
+  dwSDSize: DWord;
 begin
-   dwSDSize := MAX_PATH + 1;
-   GetMem( pcSystemDirectory, dwSDSize * 2); // allocate memory for the string
-   try
-      if Windows.GetSystemDirectory( pcSystemDirectory, dwSDSize ) <> 0 then
-         Result := StrPas(pcSystemDirectory) + '\';
-   finally
-      FreeMem( pcSystemDirectory ); // now free the memory allocated for the string
-   end;
+  dwSDSize := Max_Path + 1;
+  GetMem(pcSystemDirectory, dwSDSize * 2); // allocate memory for the string
+  try
+    if Windows.GetSystemDirectory(pcSystemDirectory, dwSDSize) <> 0 then
+      Result := StrPas(pcSystemDirectory) + '\';
+  finally
+    FreeMem(pcSystemDirectory); // now free the memory allocated for the string
+  end;
 end;
 
-function TExeInfo.GetTempDir : String;
-//Returns temp directory
+function TExeInfo.GetTempDir: String;
+// Returns temp directory
 var
-   pcTempDirectory : PChar;
-   dwSDSize          : DWORD;
+  pcTempDirectory: PChar;
+  dwSDSize: DWord;
 begin
-   dwSDSize := MAX_PATH + 1;
-   GetMem( pcTempDirectory, dwSDSize * 2); // allocate memory for the string
-   try
-      if Windows.GetTempPath( dwSDSize, pcTempDirectory ) <> 0 then
-         Result := pcTempDirectory;
-   finally
-      FreeMem( pcTempDirectory ); // now free the memory allocated for the string
-   end;
+  dwSDSize := Max_Path + 1;
+  GetMem(pcTempDirectory, dwSDSize * 2); // allocate memory for the string
+  try
+    if Windows.GetTempPath(dwSDSize, pcTempDirectory) <> 0 then
+      Result := pcTempDirectory;
+  finally
+    FreeMem(pcTempDirectory); // now free the memory allocated for the string
+  end;
 end;
-
-
 
 function TExeInfo.GetVersion: string;
 var
-  vn: Integer;
+  vn: integer;
 begin
   vn := GetVersionNr;
-  Result := IntToStr(Hi(Hiword(vn)))+'.'+IntToStr(Lo(Hiword(vn)))+'.'+IntToStr(Hi(Loword(vn)))+'.'+IntToStr(Lo(Loword(vn)));
+  Result := IntToStr(Hi(Hiword(vn))) + '.' + IntToStr(Lo(Hiword(vn))) + '.' +
+    IntToStr(Hi(Loword(vn))) + '.' + IntToStr(Lo(Loword(vn)));
 end;
 
-function TExeInfo.GetVersionNr: Integer;
+function TExeInfo.GetVersionNr: integer;
 begin
-  Result := MakeLong(MakeWord(BLD_VER,REL_VER),MakeWord(MIN_VER,MAJ_VER));
+  Result := MakeLong(MakeWord(BLD_VER, REL_VER), MakeWord(MIN_VER, MAJ_VER));
 end;
 
 function TExeInfo.GetVersionPart(idx: integer): integer;
@@ -524,7 +563,7 @@ begin
   if FileVersion = '' then
     Exit;
 
-  verstr := StringReplace(FileVersion,'.',',',[rfReplaceAll]);
+  verstr := StringReplace(FileVersion, '.', ',', [rfReplaceAll]);
 
   sl := TStringList.Create;
   try
@@ -543,6 +582,3 @@ begin
 end;
 
 end.
-
-
-

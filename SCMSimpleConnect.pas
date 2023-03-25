@@ -3,7 +3,17 @@ unit SCMSimpleConnect;
 interface
 
 uses
-  Classes, FireDAC.Stan.Def, FireDAC.Comp.Client, vcl.Forms;
+
+(*
+{$IFDEF FRAMEWORK_VCL}
+vcl.Forms,
+{$IFEND}
+{$IFDEF FRAMEWORK_FMX}
+FMX.Forms,
+{$IFEND}
+*)
+
+  Classes, FireDAC.Stan.Def, FireDAC.Comp.Client;
 
 type
   TSimpleConnect = class(TComponent)
@@ -40,7 +50,14 @@ begin
   inherited;
   // default
   fDBName := 'SwimClubMeet';
+
+  {$IFDEF FRAMEWORK_VCL}
   fAppShortName := TPath.GetFileNameWithoutExtension(Application.ExeName);
+  {$IFEND}
+  {$IFDEF FRAMEWORK_FMX}
+  fAppShortName := TPath.GetFileNameWithoutExtension(ParamStr(0));
+  {$IFEND}
+
 end;
 
 constructor TSimpleConnect.CreateWithConnection(AOwner: TComponent;
