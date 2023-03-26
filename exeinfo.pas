@@ -4,6 +4,11 @@ interface
 
 uses
 
+{$IFDEF FRAMEWORK_VCL}
+// Needed for class TApplication. wit: Application.ExeName
+vcl.Forms,
+{$IFEND}
+
 (*
 {$IFDEF FRAMEWORK_VCL}
   vcl.Forms, vcl.Graphics, vcl.Controls, vcl.Dialogs,

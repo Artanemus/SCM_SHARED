@@ -4,10 +4,12 @@ interface
 
 uses
 
-(*
+
 {$IFDEF FRAMEWORK_VCL}
+// Needed for class TApplication. wit: Application.ExeName
 vcl.Forms,
 {$IFEND}
+(*
 {$IFDEF FRAMEWORK_FMX}
 FMX.Forms,
 {$IFEND}
