@@ -4247,7 +4247,7 @@ object About: TAbout
   end
   object Label2: TLabel
     Left = 33
-    Top = 243
+    Top = 259
     Width = 99
     Height = 19
     Alignment = taRightJustify
@@ -4263,7 +4263,7 @@ object About: TAbout
   end
   object Label4: TLabel
     Left = 14
-    Top = 216
+    Top = 232
     Width = 118
     Height = 19
     Alignment = taRightJustify
@@ -4273,14 +4273,14 @@ object About: TAbout
     Left = 145
     Top = 146
     Width = 305
-    Height = 50
+    Height = 71
     AutoSize = False
     Caption = 'Label5'
     WordWrap = True
   end
   object Label6: TLabel
     Left = 145
-    Top = 243
+    Top = 259
     Width = 305
     Height = 21
     AutoSize = False
@@ -4298,7 +4298,7 @@ object About: TAbout
   end
   object Label8: TLabel
     Left = 145
-    Top = 216
+    Top = 232
     Width = 305
     Height = 21
     AutoSize = False
@@ -4307,7 +4307,7 @@ object About: TAbout
   end
   object Label9: TLabel
     Left = 145
-    Top = 270
+    Top = 286
     Width = 305
     Height = 50
     AutoSize = False
@@ -4331,7 +4331,7 @@ object About: TAbout
   end
   object Label10: TLabel
     Left = 57
-    Top = 270
+    Top = 286
     Width = 75
     Height = 19
     Alignment = taRightJustify
@@ -4339,7 +4339,7 @@ object About: TAbout
   end
   object Shape5: TShape
     Left = 164
-    Top = 379
+    Top = 387
     Width = 30
     Height = 50
     Brush.Style = bsClear
@@ -4347,7 +4347,7 @@ object About: TAbout
   end
   object Shape6: TShape
     Left = 247
-    Top = 379
+    Top = 387
     Width = 30
     Height = 50
     Brush.Style = bsClear
@@ -4355,7 +4355,7 @@ object About: TAbout
   end
   object Shape7: TShape
     Left = 330
-    Top = 379
+    Top = 387
     Width = 30
     Height = 50
     Brush.Style = bsClear
@@ -4363,7 +4363,7 @@ object About: TAbout
   end
   object Shape8: TShape
     Left = 410
-    Top = 379
+    Top = 387
     Width = 30
     Height = 50
     Brush.Style = bsClear
@@ -4371,7 +4371,7 @@ object About: TAbout
   end
   object Label11: TLabel
     Left = 168
-    Top = 380
+    Top = 388
     Width = 18
     Height = 45
     Alignment = taCenter
@@ -4385,7 +4385,7 @@ object About: TAbout
   end
   object Label12: TLabel
     Left = 251
-    Top = 380
+    Top = 388
     Width = 18
     Height = 45
     Alignment = taCenter
@@ -4399,7 +4399,7 @@ object About: TAbout
   end
   object Label13: TLabel
     Left = 334
-    Top = 380
+    Top = 388
     Width = 18
     Height = 45
     Alignment = taCenter
@@ -4413,7 +4413,7 @@ object About: TAbout
   end
   object Label14: TLabel
     Left = 417
-    Top = 380
+    Top = 388
     Width = 18
     Height = 45
     Alignment = taCenter
@@ -4427,7 +4427,7 @@ object About: TAbout
   end
   object Label15: TLabel
     Left = 214
-    Top = 353
+    Top = 361
     Width = 27
     Height = 76
     Caption = 'VERSION'
@@ -4441,7 +4441,7 @@ object About: TAbout
   end
   object Label16: TLabel
     Left = 297
-    Top = 363
+    Top = 371
     Width = 27
     Height = 62
     Caption = 'MAJOR'
@@ -4455,7 +4455,7 @@ object About: TAbout
   end
   object Label17: TLabel
     Left = 380
-    Top = 368
+    Top = 376
     Width = 27
     Height = 61
     Caption = 'MINOR'
@@ -4469,7 +4469,7 @@ object About: TAbout
   end
   object Shape1: TShape
     Left = 200
-    Top = 417
+    Top = 425
     Width = 8
     Height = 8
     Brush.Color = clBlack
@@ -4477,7 +4477,7 @@ object About: TAbout
   end
   object Shape2: TShape
     Left = 283
-    Top = 417
+    Top = 425
     Width = 8
     Height = 8
     Brush.Color = clBlack
@@ -4485,7 +4485,7 @@ object About: TAbout
   end
   object Shape3: TShape
     Left = 366
-    Top = 417
+    Top = 425
     Width = 8
     Height = 8
     Brush.Color = clBlack
@@ -4493,7 +4493,7 @@ object About: TAbout
   end
   object Shape4: TShape
     Left = 446
-    Top = 417
+    Top = 425
     Width = 8
     Height = 8
     Brush.Color = clBlack
@@ -4501,7 +4501,7 @@ object About: TAbout
   end
   object Label18: TLabel
     Left = 131
-    Top = 363
+    Top = 371
     Width = 27
     Height = 63
     Caption = 'MODEL'
@@ -4515,7 +4515,7 @@ object About: TAbout
   end
   object Label19: TLabel
     Left = 49
-    Top = 390
+    Top = 398
     Width = 69
     Height = 38
     Alignment = taRightJustify
@@ -5207,11 +5207,11 @@ object About: TAbout
       ''
       'SELECT * FROM SCMSystem WHERE SCMSystemID = 1;')
     Left = 32
-    Top = 304
+    Top = 320
   end
   object dsSCMSystem: TDataSource
     DataSet = qrySCMSystem
     Left = 136
-    Top = 304
+    Top = 320
   end
 end

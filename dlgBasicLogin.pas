@@ -120,7 +120,7 @@ end;
 
 procedure TBasicLogin.FormShow(Sender: TObject);
 begin
-  Caption := 'Login to the ' + fDBName + ' Server ...';
+  Caption := 'Login to the ' + fDBName + ' Database Server ...';
 
   if not Assigned(fDBConnection) then
   begin
