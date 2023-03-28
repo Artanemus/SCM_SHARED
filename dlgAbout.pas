@@ -131,7 +131,14 @@ end;
 function TAbout.GetDBVerInfo: Boolean;
 begin
   result := false;
-  if Assigned(fDBConnection) then
+  {
+  NOTE: (BSA: to myself)
+    Often with C++ this can fail. As C++ continues with the 'AND'.
+    The reason it may fail is due to code optimisation.
+    Or sometimes it's what version of C++ compiler that is being run.
+    Delphi guarantees to end 'IF' after the first param boolean false.
+  }
+  if Assigned(fDBConnection) and fDBConnection.Connected then
   begin
     with qrySCMSystem do
     begin
