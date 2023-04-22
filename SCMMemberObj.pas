@@ -22,7 +22,7 @@ public
   property ID: integer read fMemberID write fMemberID;
   property Name: string read fName write fName;
 
-published
+//published
 
 end;
 
