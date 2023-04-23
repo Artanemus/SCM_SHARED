@@ -78,6 +78,8 @@ const
 
    scmEventFinalsType = (ftFinals, ftSemi, ftQuarter);
 
+   scmHRType = (hrCoach = 1 , hrContact = 2, hrSwimmer = 3);
+
    var
    scmSendToFileTypes: scmSendToFileType;
    scmSendToModes: scmSendToMode;
