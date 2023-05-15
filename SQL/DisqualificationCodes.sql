@@ -17,9 +17,9 @@ VALUES
 ,(2, N'Freestyle')
 ,(3, N'Breaststroke')
 ,(4, N'Backstroke')
-,(4, N'Butterfly')
-,(5, N'IndividualMedley')
-,(6, N'Relays')
+,(5, N'Butterfly')
+,(6, N'IndividualMedley')
+,(7, N'Relays')
 
 SET IDENTITY_INSERT  [dbo].[DisqualifyType] OFF;
 
