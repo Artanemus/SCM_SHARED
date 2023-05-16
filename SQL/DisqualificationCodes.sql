@@ -15,10 +15,10 @@ INSERT INTO DisqualifyType
 VALUES
 (1, N'General')
 ,(2, N'Freestyle')
-,(3, N'Breaststroke')
-,(4, N'Backstroke')
+,(3, N'Backstroke')
+,(4, N'Breaststroke')
 ,(5, N'Butterfly')
-,(6, N'IndividualMedley')
+,(6, N'Individual Medley')
 ,(7, N'Relays')
 
 SET IDENTITY_INSERT  [dbo].[DisqualifyType] OFF;
@@ -73,18 +73,31 @@ VALUES
 (32, N'Leg Movements not always simultaneous and in horizontal plane', N'BrD' ,4),
 (33, N'Hands not pushed forward on, under or over water', N'BrE' ,4),
 
+-- BUTTERFLY 
+ 
+(34, N'Head did not break surface 15 meters after start or turn', N'BfA' ,5),
+(35 , N'More than one arm pull under water after start or turn', N'BfB' ,5), 
+(36 , N'Not toward breast off the wall', N'BfC' ,5), 
+(37 , N'Did not bring arms forward and/or backward simultaneously', N'BfD' ,5),
+(38 , N'Did not bring arms forward over water', N'BfE' ,5), 
+(39, N'Did not execute movement of both feet in same way', N'BfF' ,5), 
+(40, N'Touch was not made with both hands separated and simultaneously at turn and/or finish', N'BfG' ,5), 
+(41, N'No touch at turn and/or finish', N'BfH' ,5),
+(42, N'Arm movements did not continue throughout race', N'BfI' ,5),
+(43, N'More than one breaststroke kick per arm pull', N'BfJ' ,5),
+
 -- Individual Medley
-(34, N'Freestyle swum as backstroke, breaststroke or butterfly', N'IMA' ,5),
-(35, N'Not swum in right order', N'IMB' ,5),
-(36, N'Stroke infraction - use stroke codes', N'IMC' ,5),
+(44, N'Freestyle swum as backstroke, breaststroke or butterfly', N'IMA' ,6),
+(45, N'Not swum in right order', N'IMB' ,6),
+(46, N'Stroke infraction - use stroke codes', N'IMC' ,6),
 
 -- Relay
-(37, N'Early swimmer take-off # (RA#)', N'RA#' ,6),
-(38, N'Medley not swum in right order', N'RB' ,6),
-(39, N'Changed order of swimmers',N'RC',6),
-(40, N'Non listed swimmer swam',N'RD',6),
-(41, N'Stroke infraction - use stroke codes and swimmer',N'RE',6),
-(42, N'Swimmer other than the swimmer designated to swim entered race area before finished',N'Rf',6)
+(47, N'Early swimmer take-off # (RA#)', N'RA#' ,7),
+(48, N'Medley not swum in right order', N'RB' ,7),
+(49, N'Changed order of swimmers',N'RC',7),
+(50, N'Non listed swimmer swam',N'RD',7),
+(51, N'Stroke infraction - use stroke codes and swimmer',N'RE',7),
+(52, N'Swimmer other than the swimmer designated to swim entered race area before finished',N'Rf',7)
 
 GO
 
