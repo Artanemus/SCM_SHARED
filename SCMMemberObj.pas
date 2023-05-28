@@ -7,19 +7,15 @@ type
 
 TSCMMemberObj = class(TObject)
 private
-    fMemberID: integer;
+    fHRID: integer;   // SCM_COACH.dbo.HR IDENITY
+    fSCMMemberID: integer; // SwimClubMeet.dbo.Member IDENITY
     fName: string;
-//protected
-//
 public
-
-//  constructor Create(AOwner: TComponent); override;
-//    destructor Destroy; override;
-
   constructor Create();
   destructor Destroy; override;
 
-  property ID: integer read fMemberID write fMemberID;
+  property SCMMemberID: integer read fSCMMemberID write fSCMMemberID;
+  property HRID: integer read fHRID write fHRID;
   property Name: string read fName write fName;
 
 //published
@@ -32,7 +28,8 @@ implementation
 
 constructor TSCMMemberObj.Create;
 begin
-  fMemberID := 0;
+  fSCMMemberID := 0;
+  fHRID := 0;
   fName := '';
 end;
 
