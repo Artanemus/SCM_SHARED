@@ -363,4 +363,23 @@ end;
 
 {$ENDIF}
 
+
+//function TPreferences.GetDBVerInfo: Boolean;
+//begin
+//  result := false;
+//  if Assigned(FConnection) then
+//  begin
+//    tblSystem.Connection := FConnection;
+//    tblSystem.Open;
+//    if tblSystem.Active then
+//    begin
+//      fDBVersion := tblSystem.FieldByName('DBVersion').AsInteger;
+//      fDBMajor := tblSystem.FieldByName('Major').AsInteger;
+//      fDBMinor := tblSystem.FieldByName('Minor').AsInteger;
+//      result := true;
+//    end;
+//    tblSystem.Close;
+//  end;
+//end;
+
 end.
