@@ -46,6 +46,10 @@ const
 
    SCM_REQUERY = WM_USER + 29;
 
+   // Messages MEMBERS : used by dmManageMemberData
+   // When the Standard TCalendarPicker changes : this call syncro' data.
+   SCM_DOBUPDATED = WM_USER + 30;
+
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
    scmSendToMode = (stmSendToPrinter, stmSendToFile);
