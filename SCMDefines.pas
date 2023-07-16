@@ -49,6 +49,8 @@ const
    // Messages MEMBERS : used by dmManageMemberData
    // When the Standard TCalendarPicker changes : this call syncro' data.
    SCM_DOBUPDATED = WM_USER + 30;
+   SCM_ELECTEDONUPDATED = WM_USER + 31;
+   SCM_RETIREDONUPDATED = WM_USER + 32;
 
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
