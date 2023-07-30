@@ -100,6 +100,14 @@ begin
   fDBConnection.Params.Add('MetaDefSchema=dbo');
   fDBConnection.Params.Add('ExtendedMetadata=False');
   fDBConnection.Params.Add('ApplicationName=' + fAppShortName);
+
+  {TODO -oBSA -cGeneral : DEBUG using FireDAC Tracing
+  - requires component TFDMoniRemoteClientLink placed on form.
+  }
+{$IFDEF DEBUG}
+  fDBConnection.Params.Add('MonitorBy=Remote');
+{$ENDIF}
+
   try
     fDBConnection.Open;
   except
@@ -118,7 +126,15 @@ begin
     SaveSharedIniFileSetting(ASection, AName, Password);
     AName := 'OSAuthent';
     SaveSharedIniFileSetting(ASection, AName, AValue);
+
+{$IFDEF DEBUG}
+    {TODO -oBSA -cGeneral : FireDAC Tracing - DISABLE DEBBUG}
+    fDBConnection.ConnectionIntf.Tracing := false;
+{$ENDIF}
+
   end
+
+
 
 end;
 
