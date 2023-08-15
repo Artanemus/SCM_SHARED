@@ -52,6 +52,10 @@ const
    SCM_ELECTEDONUPDATED = WM_USER + 31;
    SCM_RETIREDONUPDATED = WM_USER + 32;
 
+   // Updates the visibility of the grids (INDV/TEAM) on tab sheet 3
+   SCM_UPDATEINDVTEAM = WM_USER + 33;
+   SCM_RENUMBERHEATS = WM_USER + 34;
+
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
    scmSendToMode = (stmSendToPrinter, stmSendToFile);
