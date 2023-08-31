@@ -55,6 +55,7 @@ const
    // Updates the visibility of the grids (INDV/TEAM) on tab sheet 3
    SCM_UPDATEINDVTEAM = WM_USER + 33;
    SCM_RENUMBERHEATS = WM_USER + 34;
+   SCM_TEAMSCROLL = WM_USER + 35;
 
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
