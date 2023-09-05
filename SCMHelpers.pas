@@ -10,6 +10,7 @@ type
     function ColumnByName(const AName : String) : TColumn;
   end;
 
+
 implementation
 
 { TGridHelper }
