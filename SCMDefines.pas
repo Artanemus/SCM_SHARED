@@ -57,6 +57,7 @@ const
    SCM_RENUMBERHEATS = WM_USER + 34;
    SCM_TEAMSCROLL = WM_USER + 35;
    SCM_RENUMBEREVENTS = WM_USER + 36;
+   SCM_TEAMENTRANTSCROLL = WM_USER + 37;
 
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
