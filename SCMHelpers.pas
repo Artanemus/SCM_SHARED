@@ -11,12 +11,28 @@ type
     function ColumnByName(const AName: String): TColumn;
     procedure DrawCheckBoxes(oGrid: TObject; Rect: TRect; Column: TColumn;
       fontColor, bgColor: TColor);
+    function GetCellRect(aPoint: TPoint): TRect;
   end;
 
 
 implementation
 
 { TGridHelper }
+
+function TGridHelper.GetCellRect(aPoint: TPoint): TRect;
+var
+  pt: TPoint;
+  GridCoord: TGridCoord;
+  aRect: TRect;
+begin
+  // NOTE: Function TPoint - Intended for Mouse.CursorPos.
+  // SAFE to have illegal params.
+  pt := ScreenToClient(aPoint);
+  // Documentation says it uses screen coordinates. BUT IT DOESN'T.
+  GridCoord := MouseCoord(pt.X, pt.Y); // get col, row
+  aRect := CellRect(GridCoord.X, GridCoord.Y); // uses col, row
+  result := ClientToScreen(aRect); // aRect position ready for dialogue display.
+end;
 
 function TGridHelper.ColumnByName(const AName: String): TColumn;
 var
