@@ -96,7 +96,7 @@ const
    scmHRType = (hrCoach = 1 , hrContact = 2, hrSwimmer = 3);
 
 
-   TEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
+   scmEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
 
    var
    scmSendToFileTypes: scmSendToFileType;
