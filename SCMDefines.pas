@@ -61,6 +61,9 @@ const
    SCM_FILTERDEACTIVATED = WM_USER + 38;
    SCM_FILTERUPDATED = WM_USER + 39;
 
+   SCM_UPDATESTATUSBAR = WM_USER + 40;
+   SCM_UPDATEENTRANTCOUNT = WM_USER + 41;
+
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
    scmSendToMode = (stmSendToPrinter, stmSendToFile);
