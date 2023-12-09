@@ -37,6 +37,9 @@ const
    SCM_UPDATEENTRANTSSCORE = WM_USER + 22;
    SCM_OPTIONS = WM_USER + 23;
 
+   SCM_EVENTASSERTSTATE = WM_USER +24; // SCM version 1.5.5.1
+   SCM_AFTERPOST = WM_USER +25; // SCM version 1.5.5.1
+
   // Messages used in Manage Members form.
    SCM_AFTERSCROLL =  WM_USER + 26;
    SCM_UPDATE = WM_USER + 27;
