@@ -29,7 +29,8 @@ type
     fMinorOut: integer;
     fPatchOut: integer;
 
-    fFileName: string; // full path and filename to UDBConfig.ini
+    fFileName: string;  // full path and filename to UDBConfig.ini
+    fIsDepreciated: Boolean;
 
   protected
     { protected declarations }
@@ -44,6 +45,7 @@ type
 
     property IsRelease: boolean read fIsRelease;
     property IsPatch: boolean read fIsPatch;
+    property IsDepreciated: boolean read fIsDepreciated;
     property PatchIn: integer read fPatchIn;
     property PatchOut: integer read fPatchOut;
     property FileName: string read fFileName write fFileName;
@@ -123,6 +125,7 @@ begin
     fDBName := ini.ReadString('BUILDCONFIG', 'DatabaseName', '');
     fIsRelease := ini.ReadBool('BUILDCONFIG', 'IsRelease', False);
     fIsPatch := ini.ReadBool('BUILDCONFIG', 'IsPatch', False);
+    fIsDepreciated := ini.ReadBool('BUILDCONFIG', 'IsDepreciated', False);
     fDescription := ini.ReadString('BUILDCONFIG', 'Description', '');
     fNotes := ini.ReadString('BUILDCONFIG', 'Notes', '');
     fBaseIn := ini.ReadInteger('BUILDIN', 'Base', 1);
@@ -149,6 +152,7 @@ begin
     ini.WriteString('BUILDCONFIG', 'DatabaseName', fDBName);
     ini.WriteBool('BUILDCONFIG', 'IsRelease', fIsRelease);
     ini.WriteBool('BUILDCONFIG', 'IsPatch', fIsPatch);
+    ini.WriteBool('BUILDCONFIG', 'IsDepreciated', fIsDepreciated);
     ini.WriteString('BUILDCONFIG', 'Description', fDescription);
     ini.WriteString('BUILDCONFIG', 'Notes', fNotes);
     ini.WriteInteger('BUILDIN', 'Base', fBaseIn);
