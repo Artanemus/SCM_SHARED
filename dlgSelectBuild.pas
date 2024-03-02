@@ -149,9 +149,12 @@ begin
     if BuildConfig.IsRelease = false then
       s := s + ' Pre-Release'
     else
-      s := s + ' Release';
+      s := s + ' Release ';
     if BuildConfig.IsPatch = true then
       s := s + ' Patch ';
+    if BuildConfig.IsDepreciated = true then
+      s := s + ' Depreciated ';
+
     ListBox1.Items.AddObject(s, BuildConfig);
   end;
 end;
