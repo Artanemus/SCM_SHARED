@@ -146,14 +146,16 @@ begin
   begin
     // create checkbox caption
     s := BuildConfig.Description;
-    if BuildConfig.IsRelease = false then
-      s := s + ' Pre-Release'
+    if BuildConfig.IsRelease then
+      s := s + ' Release '
     else
-      s := s + ' Release ';
+      s := s + ' Pre-Release';
+    // Patch is never used by BMAC (only by UDB)
     if BuildConfig.IsPatch = true then
-      s := s + ' Patch ';
+      s := s + ' Patch '+ IntToStr(BuildConfig.PatchOut);
+    // depreciated supercedes release or pre-release
     if BuildConfig.IsDepreciated = true then
-      s := s + ' Depreciated ';
+      s := BuildConfig.Description + ' Depreciated ';
 
     ListBox1.Items.AddObject(s, BuildConfig);
   end;
