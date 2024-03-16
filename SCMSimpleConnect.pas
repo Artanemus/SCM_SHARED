@@ -105,7 +105,7 @@ begin
   - requires component TFDMoniRemoteClientLink placed on form.
   }
 {$IFDEF DEBUG}
-  fDBConnection.Params.Add('MonitorBy=Remote');
+//  fDBConnection.Params.Add('MonitorBy=Remote');
 {$ENDIF}
 
   try
@@ -128,8 +128,8 @@ begin
     SaveSharedIniFileSetting(ASection, AName, AValue);
 
 {$IFDEF DEBUG}
-    {TODO -oBSA -cGeneral : FireDAC Tracing - DISABLE DEBBUG}
-    fDBConnection.ConnectionIntf.Tracing := false;
+    {TODO -oBSA -cGeneral : FireDAC Tracing - DISABLE DEBUG}
+//    fDBConnection.ConnectionIntf.Tracing := false;
 {$ENDIF}
 
   end
