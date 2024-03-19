@@ -67,6 +67,8 @@ const
    SCM_UPDATESTATUSBAR = WM_USER + 40;
    SCM_UPDATEENTRANTCOUNT = WM_USER + 41;
 
+   SCM_LOCATEMEMBER = WM_USER + 42;
+
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
    scmSendToMode = (stmSendToPrinter, stmSendToFile);
