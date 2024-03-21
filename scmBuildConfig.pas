@@ -17,17 +17,25 @@ type
     fDescription: string; // ="v1.1.5.1 to v1.1.5.2"
     fNotes: string; // ="FINA disqualification codes."
 
-    fBaseIn: integer;
-    fVersionIn: integer;
+    fBaseIn: integer; // internal use only
+    fVersionIn: integer; // depreciated
+    fPatchIn: integer; // depreciated
+
+    // RAD STUDIO VERSIONING
     fMajorIn: integer;
     fMinorIn: integer;
-    fPatchIn: integer;
+    fReleaseIn: integer;
+    fBuildIn: integer;
 
-    fBaseOut: integer;
-    fVersionOut: integer;
+    fBaseOut: integer;  // internal use only
+    fVersionOut: integer; // depreciated
+    fPatchOut: integer; // depreciated
+
+    // RAD STUDIO VERSIONING
     fMajorOut: integer;
     fMinorOut: integer;
-    fPatchOut: integer;
+    fReleaseOut: integer;
+    fBuildOut: integer;
 
     fFileName: string;  // full path and filename to UDBConfig.ini
     fIsDepreciated: Boolean;
@@ -46,15 +54,35 @@ type
     property IsRelease: boolean read fIsRelease;
     property IsPatch: boolean read fIsPatch;
     property IsDepreciated: boolean read fIsDepreciated;
-    property PatchIn: integer read fPatchIn;
-    property PatchOut: integer read fPatchOut;
     property FileName: string read fFileName write fFileName;
-    property BaseIN: integer read fBaseIn;
-    property VersionIN: integer read fVersionIn;
-    property MajorIN: integer read fMajorIn;
-    property MinorIN: integer read fMinorIn;
     property Description: string read fDescription;
     property Notes: string read fNotes;
+
+    // Base MYSQL, MSSQL, ORACLE, etc
+    // Version Used by SwimClubMeet database on MSSQL
+    // Major.Minor.Release.Build per RAD Studio
+    // Patch number - checks build number before patching...
+
+    //  IN --------------------------------------------------------
+    property BaseIN: integer read fBaseIn;
+    property VersionIN: integer read fVersionIn;
+    property PatchIn: integer read fPatchIn;
+    // RAD STUDIO VERSIONING
+    property MajorIN: integer read fMajorIn;
+    property MinorIN: integer read fMinorIn;
+    property ReleaseIN: integer read fReleaseIn;
+    property BuildIn: integer read fBuildIn;
+
+    // OUT --------------------------------------------------------
+    property BaseOUT: integer read fBaseOut;
+    property VersionOUT: integer read fVersionOUT;
+    property PatchOut: integer read fPatchOut;
+    // RAD STUDIO VERSIONING
+    property MajorOUT: integer read fMajorOUT;
+    property MinorOUT: integer read fMinorOUT;
+    property ReleaseOUT: integer read fReleaseOUT;
+    property BuildOut: integer read fBuildOut;
+
   end;
 
 implementation
@@ -64,15 +92,30 @@ implementation
 constructor TscmBuildConfig.Create;
 begin
   inherited;
+  fFileName := '';
   fIsRelease := false; // the configuration update is pre-release by default;
   fIsPatch :=  false;
+
+  //  IN --------------------------------------------------------
   fPatchIn := 0;
+  fBaseIn:= 0;  // internal use only - MYSQL, MSSQL, ORACLE, etc
+  fVersionIn := 1; // Version Used by SwimClubMeet database on MSSQL
+  // RAD STUDIO VERSIONING
+  fMajorIn := 0;
+  fMinorIn := 0;
+  fReleaseIn := 0;
+  fBuildIn := 0;
+
+  // OUT --------------------------------------------------------
   fPatchOut := 0;
-  fBaseOut := 0;
-  fVersionOut := 1;
+  fBaseOut := 0;  // internal use only - MYSQL, MSSQL, ORACLE, etc
+  fVersionOut := 1;  // Version Used by SwimClubMeet database on MSSQL
+  // RAD STUDIO VERSIONING
   fMajorOut := 0;
   fMinorOut := 0;
-  fFileName := '';
+  fReleaseOut := 0;
+  fBuildOut := 0;
+
 end;
 
 destructor TscmBuildConfig.Destroy;
@@ -95,6 +138,7 @@ function TscmBuildConfig.GetVersionStr(PickVersion: TscmBuildVersion): string;
 var
   s: string;
 begin
+  // Used by SwimClubMeet database on MSSQL
   result := '';
   s := '';
   case PickVersion of
@@ -128,16 +172,27 @@ begin
     fIsDepreciated := ini.ReadBool('BUILDCONFIG', 'IsDepreciated', False);
     fDescription := ini.ReadString('BUILDCONFIG', 'Description', '');
     fNotes := ini.ReadString('BUILDCONFIG', 'Notes', '');
-    fBaseIn := ini.ReadInteger('BUILDIN', 'Base', 1);
+
+    //  IN --------------------------------------------------------
+    fBaseIn := ini.ReadInteger('BUILDIN', 'Base', 1);  // internal use only
+    fPatchIn := ini.ReadInteger('BUILDIN', 'Patch', 0);
     fVersionIn := ini.ReadInteger('BUILDIN', 'Version', 1);
+    // RAD STUDIO VERSIONING
     fMajorIn := ini.ReadInteger('BUILDIN', 'Major', 0);
     fMinorIn := ini.ReadInteger('BUILDIN', 'Minor', 0);
-    fPatchIn := ini.ReadInteger('BUILDIN', 'PatchIn', 0);
-    fBaseOut := ini.ReadInteger('BUILDOUT', 'Base', 1);
+    fReleaseIn := ini.ReadInteger('BUILDIN', 'Release', 0);
+    fBuildIn := ini.ReadInteger('BUILDIN', 'Build', 0);
+
+    // OUT --------------------------------------------------------
+    fBaseOut := ini.ReadInteger('BUILDOUT', 'Base', 1); // internal use only
+    fPatchOut := ini.ReadInteger('BUILDOUT', 'Patch', 0);
     fVersionOut := ini.ReadInteger('BUILDOUT', 'Version', 1);
+    // RAD STUDIO VERSIONING
     fMajorOut := ini.ReadInteger('BUILDOUT', 'Major', 0);
     fMinorOut := ini.ReadInteger('BUILDOUT', 'Minor', 0);
-    fPatchOut := ini.ReadInteger('BUILDOUT', 'PatchOut', 0);
+    fReleaseOut := ini.ReadInteger('BUILDOUT', 'Release', 0);
+    fBuildOut := ini.ReadInteger('BUILDOUT', 'Build', 0);
+
   finally
     ini.Free;
   end;
@@ -155,16 +210,27 @@ begin
     ini.WriteBool('BUILDCONFIG', 'IsDepreciated', fIsDepreciated);
     ini.WriteString('BUILDCONFIG', 'Description', fDescription);
     ini.WriteString('BUILDCONFIG', 'Notes', fNotes);
-    ini.WriteInteger('BUILDIN', 'Base', fBaseIn);
+
+    //  IN --------------------------------------------------------
+    ini.WriteInteger('BUILDIN', 'Base', fBaseIn);   // internal use only
+    ini.WriteInteger('BUILDIN', 'Patch', fPatchIn);
     ini.WriteInteger('BUILDIN', 'Version', fVersionIn);
+    // RAD STUDIO VERSIONING
     ini.WriteInteger('BUILDIN', 'Major', fMajorIn);
     ini.WriteInteger('BUILDIN', 'Minor', fMinorIn);
-    ini.WriteInteger('BUILDIN', 'Base', fPatchIn);
-    ini.WriteInteger('BUILDOUT', 'Base', fBaseOut);
+    ini.WriteInteger('BUILDIN', 'Release', fReleaseIn);
+    ini.WriteInteger('BUILDIN', 'Build', fBuildIn);
+
+    // OUT --------------------------------------------------------
+    ini.WriteInteger('BUILDOUT', 'Base', fBaseOut);  // internal use only
+    ini.WriteInteger('BUILDOUT', 'Patch', fPatchOut);
     ini.WriteInteger('BUILDOUT', 'Version', fVersionOut);
+    // RAD STUDIO VERSIONING
     ini.WriteInteger('BUILDOUT', 'Major', fMajorOut);
     ini.WriteInteger('BUILDOUT', 'Minor', fMinorOut);
-    ini.WriteInteger('BUILDOUT', 'Base', fPatchOut);
+    ini.WriteInteger('BUILDOUT', 'Release', fReleaseOut);
+    ini.WriteInteger('BUILDOUT', 'Build', fBuildOut);
+
   finally
     ini.Free;
   end;
