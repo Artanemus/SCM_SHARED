@@ -4,41 +4,36 @@ interface
 
 uses
 
-
 {$IFDEF FRAMEWORK_VCL}
-// Needed for class TApplication. wit: Application.ExeName
-vcl.Forms,
+  // Needed for class TApplication. wit: Application.ExeName
+  vcl.Forms,
 {$IFEND}
-(*
-{$IFDEF FRAMEWORK_FMX}
-FMX.Forms,
-{$IFEND}
-*)
+  (*
+    {$IFDEF FRAMEWORK_FMX}
+    FMX.Forms,
+    {$IFEND}
+  *)
 
   Classes, FireDAC.Stan.Def, FireDAC.Comp.Client;
 
 type
   TSimpleConnect = class(TComponent)
   private
-    { private declarations }
+    fAppShortName: String;
     fDBConnection: TFDConnection;
     fDBName: String;
-    fAppShortName: String;
-  protected
-    { protected declarations }
+    fSaveConfigAfterConnect: boolean;
   public
-    { public declarations }
-    procedure SimpleMakeTemporyConnection(Server, User, Password: string;
-      OsAuthent: boolean);
     constructor Create(AOwner: TComponent); override;
     constructor CreateWithConnection(AOwner: TComponent;
       AConnection: TFDConnection);
-
+    procedure SimpleMakeTemporyConnection(Server, User, Password: string;
+      OsAuthent: boolean);
   published
-    { published declarations }
     property DBConnection: TFDConnection read fDBConnection write fDBConnection;
     property DBName: string read fDBName write fDBName;
-
+    property SaveConfigAfterConnection: boolean read fSaveConfigAfterConnect
+      write fSaveConfigAfterConnect;
   end;
 
   { TSimpleConnect }
@@ -52,14 +47,13 @@ begin
   inherited;
   // default
   fDBName := 'SwimClubMeet';
-
-  {$IFDEF FRAMEWORK_VCL}
+  fSaveConfigAfterConnect := true;
+{$IFDEF FRAMEWORK_VCL}
   fAppShortName := TPath.GetFileNameWithoutExtension(Application.ExeName);
-  {$IFEND}
-  {$IFDEF FRAMEWORK_FMX}
+{$IFEND}
+{$IFDEF FRAMEWORK_FMX}
   fAppShortName := TPath.GetFileNameWithoutExtension(ParamStr(0));
-  {$IFEND}
-
+{$IFEND}
 end;
 
 constructor TSimpleConnect.CreateWithConnection(AOwner: TComponent;
@@ -104,21 +98,20 @@ begin
   fDBConnection.Params.Add('Certificate =Yes');
   fDBConnection.Params.Add('ApplicationName=' + fAppShortName);
 
-  {TODO -oBSA -cGeneral : DEBUG using FireDAC Tracing
-  - requires component TFDMoniRemoteClientLink placed on form.
+  { TODO -oBSA -cGeneral : DEBUG using FireDAC Tracing
+    - requires component TFDMoniRemoteClientLink placed on form.
   }
 {$IFDEF DEBUG}
-//  fDBConnection.Params.Add('MonitorBy=Remote');
+  // fDBConnection.Params.Add('MonitorBy=Remote');
 {$ENDIF}
-
   try
     fDBConnection.Open;
   except
     // Display the server error?
   end;
 
-    // ON SUCCESS - Save connection details.
-  if (fDBConnection.Connected) then
+  // ON SUCCESS - Save connection details.
+  if (fDBConnection.Connected and fSaveConfigAfterConnect) then
   begin
     ASection := 'MSSQL_Connection';
     AName := 'Server';
@@ -131,13 +124,10 @@ begin
     SaveSharedIniFileSetting(ASection, AName, AValue);
 
 {$IFDEF DEBUG}
-    {TODO -oBSA -cGeneral : FireDAC Tracing - DISABLE DEBUG}
-//    fDBConnection.ConnectionIntf.Tracing := false;
+    { TODO -oBSA -cGeneral : FireDAC Tracing - DISABLE DEBUG }
+    // fDBConnection.ConnectionIntf.Tracing := false;
 {$ENDIF}
-
   end
-
-
 
 end;
 
