@@ -45,7 +45,7 @@ const
    SCM_UPDATE = WM_USER + 27;
 
   // Messages sent by dmSCMNom
-   SCM_LANEWASCLEANED = WM_USER + 28;  // refresh of entrant grid required
+   SCM_LANEWASCLEANED = WM_USER + 28;  // refresh of entrant grid required.
 
    SCM_REQUERY = WM_USER + 29;
 
@@ -71,6 +71,9 @@ const
    SCM_CHANGESWIMCLUB = WM_USER + 43;
    SCM_FILTERCLUBDEACTIVATED = WM_USER + 44;
    SCM_AUTOBUILDRELAYSFIN = WM_USER + 45;
+
+   // Update Non-Data-Aware UI labels.
+   SCM_UPDATEUI = WM_USER + 46;
 
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
