@@ -75,6 +75,7 @@ const
    // Update Non-Data-Aware UI labels.
    SCM_UPDATEUI = WM_USER + 46;
    SCM_UPDATEUI2 = WM_USER + 47;
+   SCM_UPDATEUI3 = WM_USER + 48;
 
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
