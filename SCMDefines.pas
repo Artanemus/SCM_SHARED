@@ -77,6 +77,12 @@ const
    SCM_UPDATEUI2 = WM_USER + 47;
    SCM_UPDATEUI3 = WM_USER + 48;
 
+  { SCM_DolphinTiming specific windows message ....}
+   SCM_CALL_DOLPHIN_TIMING = WM_USER + 49;
+
+  { SCM_TimeDrops specific windows message ....}
+   SCM_CALL_TIME_DROPS = WM_USER + 50;
+
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
    scmSendToMode = (stmSendToPrinter, stmSendToFile);
