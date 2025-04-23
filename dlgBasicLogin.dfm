@@ -67,7 +67,6 @@ object BasicLogin: TBasicLogin
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 1
     Text = 'edtPassword'
-    ExplicitWidth = 259
   end
   object edtServer: TEdit
     Left = 99
@@ -77,7 +76,6 @@ object BasicLogin: TBasicLogin
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 2
     Text = 'edtServer'
-    ExplicitWidth = 383
   end
   object edtUser: TEdit
     Left = 99
@@ -87,7 +85,6 @@ object BasicLogin: TBasicLogin
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 3
     Text = 'edtUser'
-    ExplicitWidth = 331
   end
   object Panel1: TPanel
     Left = 0
@@ -99,8 +96,6 @@ object BasicLogin: TBasicLogin
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 4
-    ExplicitTop = 212
-    ExplicitWidth = 515
     DesignSize = (
       519
       68)
@@ -123,7 +118,6 @@ object BasicLogin: TBasicLogin
       ModalResult = 3
       TabOrder = 1
       OnClick = btnAbortClick
-      ExplicitLeft = 315
     end
     object btnConnect: TButton
       Left = 406
@@ -135,7 +129,6 @@ object BasicLogin: TBasicLogin
       Default = True
       TabOrder = 0
       OnClick = btnConnectClick
-      ExplicitLeft = 402
     end
   end
 end

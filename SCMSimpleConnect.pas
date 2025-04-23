@@ -94,7 +94,7 @@ begin
   fDBConnection.Params.Add('MetaDefSchema=dbo');
   fDBConnection.Params.Add('ExtendedMetadata=False');
   fDBConnection.Params.Add('Encrypt=No');
-  fDBConnection.Params.Add('ODBCAdvanced=Encrypt=no;Trust Server');
+  fDBConnection.Params.Add('ODBCAdvanced=Encrypt=no;Trust Server Certificate =Yes;');
   fDBConnection.Params.Add('Certificate =Yes');
   fDBConnection.Params.Add('ApplicationName=' + fAppShortName);
 
