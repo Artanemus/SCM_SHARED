@@ -10,7 +10,7 @@ interface
   $APPDATA$\Artanemus\SCM\$PREFFILENAME$.ini
 
   $APPDATA$ exspands too...
-  'C:\Users\USERNAME\AppData\Roaming\'
+  '%SYSTEMDRIVE%\Users\%USERNAME%\AppData\Roaming\'
 }
 
 uses

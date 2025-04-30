@@ -73,9 +73,9 @@ const
    SCM_AUTOBUILDRELAYSFIN = WM_USER + 45;
 
    // Update Non-Data-Aware UI labels.
-   SCM_UPDATEUI = WM_USER + 46;
-   SCM_UPDATEUI2 = WM_USER + 47;
-   SCM_UPDATEUI3 = WM_USER + 48;
+   SCM_UPDATEUI_SCM = WM_USER + 46;   // SwimClubMeet display
+   SCM_UPDATEUI_TDS = WM_USER + 47;   // TimeDrops display
+   SCM_CONNECT = WM_USER + 48;  // Displays Connect DLG.
 
   { SCM_DolphinTiming specific windows message ....}
    SCM_CALL_DOLPHIN_TIMING = WM_USER + 49;
@@ -119,6 +119,13 @@ const
 
 
    scmEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
+
+  //  dtFileType = (dtUnknown, dtDO4, dtDO3, dtALL);
+  // 5 x modes m-enabled, m-disabled, a-enabled, a-disabled, unknown (err or nil).
+  //  dtTimeModeErr = (tmeUnknow, tmeBadTime, tmeExceedsDeviation, tmeEmpty);
+  //  dtPrecedence = (dtPrecHeader, dtPrecFileName);
+  scmActiveRT = (artAutomatic, artManual, artUser, artSplit, artNone);
+
 
    var
    scmSendToFileTypes: scmSendToFileType;
