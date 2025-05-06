@@ -80,8 +80,11 @@ const
   { SCM_DolphinTiming specific windows message ....}
    SCM_CALL_DOLPHIN_TIMING = WM_USER + 49;
 
-  { SCM_TimeDrops specific windows message ....}
-   SCM_CALL_TIME_DROPS = WM_USER + 50;
+   SCM_CLEAR_TIMEDROPS = WM_USER + 50;
+   SCM_CLEARANDSCAN_TIMEDROPS = WM_USER + 51;
+   SCM_PUSH_TIMEDROPS = WM_USER + 52;
+   SCM_SCAN_TIMEDROPS = WM_USER + 53;
+
 
    type
    scmSendToFileType = (sftPDF, sftXLS, sftHTML, sftNA);
