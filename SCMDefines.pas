@@ -84,6 +84,7 @@ const
    SCM_CLEARANDSCAN_TIMEDROPS = WM_USER + 51;
    SCM_PUSH_TIMEDROPS = WM_USER + 52;
    SCM_SCAN_TIMEDROPS = WM_USER + 53;
+   SCM_UPDATE_NOODLES = WM_USER + 54;
 
 
    type
@@ -134,6 +135,7 @@ const
    scmSendToFileTypes: scmSendToFileType;
    scmSendToModes: scmSendToMode;
    scmRptTypes: scmRptType;
+   scmSagFactor: single = 0.5; // Sag in patch noodles - default 0.5. (50%).
 
   implementation
 
