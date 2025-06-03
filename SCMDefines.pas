@@ -136,6 +136,8 @@ const
    scmSendToModes: scmSendToMode;
    scmRptTypes: scmRptType;
    scmSagFactor: single = 0.5; // Sag in patch noodles - default 0.5. (50%).
+   scmNumOfSegments: integer = 20; // Patch Noodle line segments.
+
 
   implementation
 
