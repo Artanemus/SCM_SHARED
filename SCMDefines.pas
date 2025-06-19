@@ -128,7 +128,7 @@ const
   // 5 x modes m-enabled, m-disabled, a-enabled, a-disabled, unknown (err or nil).
   //  dtTimeModeErr = (tmeUnknow, tmeBadTime, tmeExceedsDeviation, tmeEmpty);
   //  dtPrecedence = (dtPrecHeader, dtPrecFileName);
-  scmActiveRT = (artAutomatic, artManual, artUser, artSplit, artNone);
+  scmActiveRT = (artAutomatic, artFinalTime, artManual, artUser, artSplit, artPadTime, artNone);
 
 
    var
