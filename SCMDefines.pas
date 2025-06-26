@@ -121,6 +121,7 @@ const
 
    scmHRType = (hrCoach = 1 , hrContact = 2, hrSwimmer = 3);
 
+	 scmDTFileType = (ftUnknown, ftDO3, ftDO4); // Dolphin Timing file type.
 
    scmEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
 
