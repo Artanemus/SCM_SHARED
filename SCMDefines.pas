@@ -122,6 +122,7 @@ const
    scmHRType = (hrCoach = 1 , hrContact = 2, hrSwimmer = 3);
 
 	 scmDTFileType = (ftUnknown, ftDO3, ftDO4); // Dolphin Timing file type.
+	 scmDTPrecedence = (precUnknown, precDO3, precDO4); // DO3 use header info, DO4 use filename
 
    scmEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
 
