@@ -122,9 +122,9 @@ const
    scmHRType = (hrCoach = 1 , hrContact = 2, hrSwimmer = 3);
 
 	 scmDTFileType = (ftUnknown, ftDO3, ftDO4); // Dolphin Timing file type.
-	 scmDTPrecedence = (precUnknown, precDO3, precDO4); // DO3 use header info, DO4 use filename
-
-   scmEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
+	 scmDTUseFileType = (uftBoth,  uftDO3, uftDO4); // Dolphin Timing file types to use.
+	 scmDTPrecedence = (precUnknown, precDO3, precDO4); // DO3 use header info, DO4 use filename DEPRECIATED.
+	 scmEventType = (etUnknown = 0, etINDV = 1, etTEAM = 2);
 
   //  dtFileType = (dtUnknown, dtDO4, dtDO3, dtALL);
   // 5 x modes m-enabled, m-disabled, a-enabled, a-disabled, unknown (err or nil).
@@ -134,9 +134,9 @@ const
 
 
    var
-   scmSendToFileTypes: scmSendToFileType;
-   scmSendToModes: scmSendToMode;
-   scmRptTypes: scmRptType;
+	 scmSendToFileTypes: scmSendToFileType;
+	 scmSendToModes: scmSendToMode;
+	 scmRptTypes: scmRptType;
    scmSagFactor: single = 0.5; // Sag in patch noodles - default 0.5. (50%).
    scmNumOfSegments: integer = 20; // Patch Noodle line segments.
 
