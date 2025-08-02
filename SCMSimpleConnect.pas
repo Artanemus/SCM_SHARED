@@ -46,7 +46,7 @@ constructor TSimpleConnect.Create(AOwner: TComponent);
 begin
   inherited;
   // default
-  fDBName := 'SwimClubMeet';
+  fDBName := 'SwimClubMeet2';
   fSaveConfigAfterConnect := true;
 {$IFDEF FRAMEWORK_VCL}
   fAppShortName := TPath.GetFileNameWithoutExtension(Application.ExeName);

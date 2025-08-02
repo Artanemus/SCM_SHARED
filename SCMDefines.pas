@@ -73,7 +73,7 @@ const
    SCM_AUTOBUILDRELAYSFIN = WM_USER + 45;
 
    // Update Non-Data-Aware UI labels.
-   SCM_UPDATEUI_SCM = WM_USER + 46;   // SwimClubMeet display
+   SCM_UPDATEUI_SCM = WM_USER + 46;   // SwimClubMeet2 display
    SCM_UPDATEUI_TDS = WM_USER + 47;   // TimeDrops display
    SCM_CONNECT = WM_USER + 48;  // Displays Connect DLG.
 

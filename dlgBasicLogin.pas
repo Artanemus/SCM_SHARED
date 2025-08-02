@@ -69,7 +69,7 @@ begin
   if Assigned(fDBConnection) then
   begin
     sc := TSimpleConnect.CreateWithConnection(Self, fDBConnection);
-    // DEFAULT : SwimClubMeet
+		// DEFAULT : SwimClubMeet2 or SwimCubMeet
     sc.DBName := fDBName;
     sc.SimpleMakeTemporyConnection(edtServer.Text, edtUser.Text,
       edtPassword.Text, chkOsAuthent.Checked);
@@ -99,7 +99,7 @@ var
 begin
   lblLoginErrMsg.Visible := false;
   lblMsg.Visible := false;
-  fDBName := 'SwimClubMeet'; // DEFAULT
+  if fDBName.Isempty then fDBName := 'SwimClubMeet2'; // DEFAULT
 
   // Read last successful connection params and load into controls
   ASection := 'MSSQL_Connection';

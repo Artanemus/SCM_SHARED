@@ -86,7 +86,7 @@ procedure TAbout.FormCreate(Sender: TObject);
 begin
 	ExeInfo1 := TExeInfo.Create(self);
   fDBConnection := nil;
-  fDBName := 'SwimClubMeet'; // DEFAULT
+  fDBName := 'SwimClubMeet2'; // DEFAULT
 end;
 
 procedure TAbout.FormDestroy(Sender: TObject);
@@ -142,7 +142,7 @@ begin
   begin
     with qrySCMSystem do
     begin
-      // Required To accept either SwimClubMeet, SCM_Carnival or SCM_Coach databases
+      // Required To accept either SwimClubMeet2, SCM_Carnival or SCM_Coach databases
       // NOTE: the dbo.SCMSystem table is common to all DBs.
       SQL.Clear;
       SQL.Add('USE ' + DBName + ';');
