@@ -15,11 +15,17 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes,
+  System.Classes, Data.DB,
 {$IFDEF MSWINDOWS}
   System.Win.Registry,
 {$IFEND}
   shlobj;
+
+
+type
+  TRecordPos = (rpBeforeFirst, rpFirst, rpMiddle, rpLast, rpAfterLast);
+
+function GetRecordPosition(ADataset: TDataSet): TRecordPos;
 
 function CreateSCMPrefFileName(AFileName: TFileName): boolean;
 function DeleteSCMPrefFileName(AFileName: TFileName): boolean;
@@ -43,6 +49,8 @@ function LoadSharedIniFileSetting(ASection, AName: string): string;
 procedure SaveSharedIniFileSetting(ASection, AName, AValue: string);
 {$IFEND}
 
+
+
 const
   PrefFileName = 'SCMPref.ini';
   HelpPrefFileName = 'SCMHelpPref.ini';
@@ -60,6 +68,30 @@ uses
   IdTCPClient; // for checkinternet
 
 // Winapi.ShLwApi;
+
+function GetRecordPosition(ADataset: TDataSet): TRecordPos;
+begin
+  if ADataset.IsEmpty then
+    Exit(rpBeforeFirst);
+
+  if ADataset.BOF and ADataset.EOF then
+    Exit(rpBeforeFirst); // 1 record, but before it
+
+  if ADataset.BOF then
+    Exit(rpBeforeFirst);
+
+  if ADataset.RecNo = 1 then
+    Exit(rpFirst);
+
+  if ADataset.EOF then
+    Exit(rpAfterLast);
+
+  if ADataset.RecNo = ADataset.RecordCount then
+    Exit(rpLast);
+
+  Result := rpMiddle;
+end;
+
 
 function GetSCM_SharedIniFile(): string;
 begin
@@ -324,14 +356,12 @@ begin
   end;
   // pull the entrants lane number.
   result := Lanes[index];
-
   {
     You don't need to call SetLength at the end.
     A dynamic-array field like 'Lanes' gets released automatically when
     the object is destroyed.
+    // SetLength(Lanes, 0);
   }
-  // free the array.   ALT Lanes := nil;
-  // SetLength(Lanes, 0);
 end;
 
 {$IFDEF MSWINDOWS}
