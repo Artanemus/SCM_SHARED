@@ -22,7 +22,7 @@ const
   {
     L e a d e r B o a r d .
     (Depreciated? CHECK)
-    SCMDefines may be referenced in SCM_LEADERBOARD
+    uDefines may be referenced in SCM_LEADERBOARD
   }
    SCM_INITIALISE = WM_USER + 12;
    SCM_EMPTYENTRANTS = WM_USER + 13;
