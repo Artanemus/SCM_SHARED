@@ -25,8 +25,6 @@ object SelectBuild: TSelectBuild
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 426
-    ExplicitHeight = 542
     object ListBox1: TListBox
       AlignWithMargins = True
       Left = 10
@@ -56,8 +54,6 @@ object SelectBuild: TSelectBuild
       StyleElements = [seClient, seBorder]
       OnClick = ListBox1Click
       OnDblClick = ListBox1DblClick
-      ExplicitWidth = 406
-      ExplicitHeight = 522
     end
   end
   object Panel2: TPanel
@@ -70,8 +66,6 @@ object SelectBuild: TSelectBuild
     BevelKind = bkFlat
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 667
-    ExplicitWidth = 426
     object btnCancel: TButton
       Left = 104
       Top = 15
@@ -87,7 +81,7 @@ object SelectBuild: TSelectBuild
       Top = 15
       Width = 108
       Height = 35
-      Caption = 'Ok'
+      Caption = 'Select'
       ModalResult = 1
       TabOrder = 1
       OnClick = btnOkClick
@@ -102,7 +96,6 @@ object SelectBuild: TSelectBuild
     BevelOuter = bvNone
     Caption = 'Select a build...'
     TabOrder = 2
-    ExplicitWidth = 426
   end
   object pnlNotes: TPanel
     Left = 0
@@ -112,8 +105,6 @@ object SelectBuild: TSelectBuild
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 3
-    ExplicitTop = 583
-    ExplicitWidth = 426
     object lblNotes: TLabel
       AlignWithMargins = True
       Left = 12
